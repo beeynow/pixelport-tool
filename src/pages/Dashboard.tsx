@@ -1,13 +1,22 @@
 import Navbar from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, FileText, Image, FileType } from "lucide-react";
+import { Upload, FileText, Image, FileType, Crown } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@clerk/clerk-react";
+import { CONVERSION_LIMITS } from "@/lib/clerk";
 
 const Dashboard = () => {
   const [isDragging, setIsDragging] = useState(false);
   const { toast } = useToast();
+  const { user } = useUser();
+
+  // Check if user has premium subscription
+  // In a real app, this would check user.publicMetadata.subscription or a custom claim
+  const isPremium = user?.publicMetadata?.subscription === "premium";
+  const limits = isPremium ? CONVERSION_LIMITS.PREMIUM : CONVERSION_LIMITS.FREE;
+  const conversionsToday = 0; // Would track this in your database
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -21,15 +30,62 @@ const Dashboard = () => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    
-    toast({
-      title: "File received!",
-      description: "Your file is ready to be converted.",
-    });
+
+    const files = Array.from(e.dataTransfer.files);
+    const file = files[0];
+
+    if (file) {
+      // Check file size
+      if (file.size > limits.fileSize) {
+        toast({
+          title: "File too large",
+          description: `Max file size is ${limits.fileSize / (1024 * 1024)}MB for your plan.`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Check daily limit
+      if (conversionsToday >= limits.daily) {
+        toast({
+          title: "Daily limit reached",
+          description: "Upgrade to Premium for unlimited conversions!",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "File received!",
+        description: "Your file is ready to be converted.",
+      });
+    }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      // Check file size
+      if (file.size > limits.fileSize) {
+        toast({
+          title: "File too large",
+          description: `Max file size is ${limits.fileSize / (1024 * 1024)}MB for your plan.`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Check daily limit
+      if (conversionsToday >= limits.daily) {
+        toast({
+          title: "Daily limit reached",
+          description: "Upgrade to Premium for unlimited conversions!",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
         title: "File selected!",
         description: "Your file is ready to be converted.",
@@ -40,21 +96,49 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
-          {/* Header */}
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold">
-              Convert Your{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Files
-              </span>
-            </h1>
-            <p className="text-muted-foreground">
-              Upload your files below to get started with instant conversion
-            </p>
+          {/* Header with Plan Info */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <h1 className="text-4xl font-bold">
+                Convert Your{" "}
+                <span className="bg-gradient-primary bg-clip-text text-transparent">
+                  Files
+                </span>
+              </h1>
+              <p className="text-muted-foreground">
+                Upload your files below to get started with instant conversion
+              </p>
+            </div>
+            {!isPremium && (
+              <Button className="bg-gradient-primary hover:opacity-90">
+                <Crown className="mr-2 h-4 w-4" />
+                Upgrade to Premium
+              </Button>
+            )}
           </div>
+
+          {/* Usage Stats */}
+          <Card className="p-4 bg-gradient-card">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  {isPremium ? "Premium Plan" : "Free Plan"}
+                </p>
+                <p className="text-2xl font-bold">
+                  {conversionsToday} / {isPremium ? "∞" : limits.daily} conversions today
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-muted-foreground">Max file size</p>
+                <p className="text-lg font-semibold">
+                  {limits.fileSize / (1024 * 1024)}MB
+                </p>
+              </div>
+            </div>
+          </Card>
 
           {/* Upload Area */}
           <Card
@@ -93,7 +177,7 @@ const Dashboard = () => {
               </label>
               <div className="pt-4 text-sm text-muted-foreground">
                 <p>Supported formats: PDF, Word, JPG, PNG</p>
-                <p>Max file size: 10MB (Free) | 100MB (Premium)</p>
+                <p>Max file size: {limits.fileSize / (1024 * 1024)}MB</p>
               </div>
             </div>
           </Card>

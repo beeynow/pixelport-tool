@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileType, Menu, X } from "lucide-react";
+import { FileType, Menu, X, User } from "lucide-react";
 import { useState } from "react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useUser();
 
   return (
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-lg border-b border-border z-50">
@@ -28,19 +30,37 @@ const Navbar = () => {
             <Link to="/#pricing" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
               Pricing
             </Link>
-            <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
-              Dashboard
-            </Link>
+            <SignedIn>
+              <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+                Dashboard
+              </Link>
+            </SignedIn>
           </div>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link to="/auth">Sign In</Link>
-            </Button>
-            <Button asChild className="bg-gradient-primary hover:opacity-90 transition-opacity">
-              <Link to="/auth">Get Started</Link>
-            </Button>
+            <SignedOut>
+              <Button variant="ghost" asChild>
+                <Link to="/auth/sign-in">Sign In</Link>
+              </Button>
+              <Button asChild className="bg-gradient-primary hover:opacity-90 transition-opacity">
+                <Link to="/auth/sign-up">Get Started</Link>
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-muted-foreground">
+                  Hi, {user?.firstName || user?.username}
+                </span>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-10 w-10"
+                    }
+                  }}
+                />
+              </div>
+            </SignedIn>
           </div>
 
           {/* Mobile Menu Button */}
@@ -69,20 +89,30 @@ const Navbar = () => {
             >
               Pricing
             </Link>
-            <Link
-              to="/dashboard"
-              className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
+            <SignedIn>
+              <Link
+                to="/dashboard"
+                className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            </SignedIn>
             <div className="flex flex-col space-y-2 pt-4">
-              <Button variant="ghost" asChild>
-                <Link to="/auth">Sign In</Link>
-              </Button>
-              <Button asChild className="bg-gradient-primary">
-                <Link to="/auth">Get Started</Link>
-              </Button>
+              <SignedOut>
+                <Button variant="ghost" asChild>
+                  <Link to="/auth/sign-in">Sign In</Link>
+                </Button>
+                <Button asChild className="bg-gradient-primary">
+                  <Link to="/auth/sign-up">Get Started</Link>
+                </Button>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex items-center space-x-3 px-4">
+                  <User className="h-5 w-5 text-muted-foreground" />
+                  <span className="text-sm">{user?.firstName || user?.username}</span>
+                </div>
+              </SignedIn>
             </div>
           </div>
         )}

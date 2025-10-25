@@ -14,13 +14,46 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      user_subscriptions: {
+        Row: {
+          clerk_user_id: string
+          conversions_today: number
+          created_at: string
+          id: string
+          last_conversion_date: string | null
+          subscription_tier: string
+          updated_at: string
+        }
+        Insert: {
+          clerk_user_id: string
+          conversions_today?: number
+          created_at?: string
+          id?: string
+          last_conversion_date?: string | null
+          subscription_tier?: string
+          updated_at?: string
+        }
+        Update: {
+          clerk_user_id?: string
+          conversions_today?: number
+          created_at?: string
+          id?: string
+          last_conversion_date?: string | null
+          subscription_tier?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_conversion_count: {
+        Args: { user_id: string }
+        Returns: undefined
+      }
+      reset_daily_conversions: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

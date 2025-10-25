@@ -1,233 +1,203 @@
-import Navbar from "@/components/Navbar";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Upload, FileText, Image, FileType, Crown } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Image, 
+  FileSpreadsheet, 
+  FileText,
+  Combine,
+  Split,
+  Minimize2,
+  ArrowUpCircle
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
 import { CONVERSION_LIMITS } from "@/lib/clerk";
+import { useConversionTracking } from "@/hooks/useConversionTracking";
+import { ConversionCard } from "@/components/ConversionCard";
+import * as conversions from "@/lib/conversions";
 
 const Dashboard = () => {
-  const [isDragging, setIsDragging] = useState(false);
-  const { toast } = useToast();
   const { user } = useUser();
+  const [conversionCount, setConversionCount] = useState(0);
+  const [subscriptionTier, setSubscriptionTier] = useState<'free' | 'premium'>('free');
+  const { getConversionStats } = useConversionTracking();
 
-  // Check if user has premium subscription
-  // In a real app, this would check user.publicMetadata.subscription or a custom claim
-  const isPremium = user?.publicMetadata?.subscription === "premium";
+  useEffect(() => {
+    loadStats();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadStats = async () => {
+    const stats = await getConversionStats();
+    if (stats) {
+      setConversionCount(stats.conversions_today);
+      setSubscriptionTier(stats.subscription_tier as 'free' | 'premium');
+    }
+  };
+
+  const isPremium = subscriptionTier === 'premium';
   const limits = isPremium ? CONVERSION_LIMITS.PREMIUM : CONVERSION_LIMITS.FREE;
-  const conversionsToday = 0; // Would track this in your database
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
+  const handleImagesToPdf = async (files: File[]) => {
+    const blob = await conversions.convertImagesToPdf(files);
+    conversions.downloadFile(blob, 'images-to-pdf.pdf');
+    await loadStats();
   };
 
-  const handleDragLeave = () => {
-    setIsDragging(false);
+  const handleExcelToCsv = async (files: File[]) => {
+    const blob = await conversions.convertExcelToCsv(files[0]);
+    conversions.downloadFile(blob, 'converted.csv');
+    await loadStats();
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const files = Array.from(e.dataTransfer.files);
-    const file = files[0];
-
-    if (file) {
-      // Check file size
-      if (file.size > limits.fileSize) {
-        toast({
-          title: "File too large",
-          description: `Max file size is ${limits.fileSize / (1024 * 1024)}MB for your plan.`,
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Check daily limit
-      if (conversionsToday >= limits.daily) {
-        toast({
-          title: "Daily limit reached",
-          description: "Upgrade to Premium for unlimited conversions!",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      toast({
-        title: "File received!",
-        description: "Your file is ready to be converted.",
-      });
-    }
+  const handleCsvToExcel = async (files: File[]) => {
+    const blob = await conversions.convertCsvToExcel(files[0]);
+    conversions.downloadFile(blob, 'converted.xlsx');
+    await loadStats();
   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+  const handleTextToPdf = async (files: File[]) => {
+    const blob = await conversions.convertTextToPdf(files[0]);
+    conversions.downloadFile(blob, 'text-to-pdf.pdf');
+    await loadStats();
+  };
 
-      // Check file size
-      if (file.size > limits.fileSize) {
-        toast({
-          title: "File too large",
-          description: `Max file size is ${limits.fileSize / (1024 * 1024)}MB for your plan.`,
-          variant: "destructive",
-        });
-        return;
-      }
+  const handleMergePdfs = async (files: File[]) => {
+    const blob = await conversions.mergePdfs(files);
+    conversions.downloadFile(blob, 'merged.pdf');
+    await loadStats();
+  };
 
-      // Check daily limit
-      if (conversionsToday >= limits.daily) {
-        toast({
-          title: "Daily limit reached",
-          description: "Upgrade to Premium for unlimited conversions!",
-          variant: "destructive",
-        });
-        return;
-      }
+  const handleSplitPdf = async (files: File[]) => {
+    const blobs = await conversions.splitPdf(files[0]);
+    blobs.forEach((blob, index) => {
+      conversions.downloadFile(blob, `page-${index + 1}.pdf`);
+    });
+    await loadStats();
+  };
 
-      toast({
-        title: "File selected!",
-        description: "Your file is ready to be converted.",
-      });
-    }
+  const handleCompressImage = async (files: File[]) => {
+    const blob = await conversions.compressImage(files[0], 0.6);
+    conversions.downloadFile(blob, 'compressed.jpg');
+    await loadStats();
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-hero">
       <Navbar />
-
+      
       <div className="container mx-auto px-4 pt-24 pb-12">
-        <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
-          {/* Header with Plan Info */}
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <h1 className="text-4xl font-bold">
-                Convert Your{" "}
-                <span className="bg-gradient-primary bg-clip-text text-transparent">
-                  Files
-                </span>
-              </h1>
-              <p className="text-muted-foreground">
-                Upload your files below to get started with instant conversion
-              </p>
-            </div>
-            {!isPremium && (
-              <Button className="bg-gradient-primary hover:opacity-90">
-                <Crown className="mr-2 h-4 w-4" />
-                Upgrade to Premium
-              </Button>
-            )}
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome back, {user?.firstName || user?.username}!
+            </p>
           </div>
+          {!isPremium && (
+            <Button className="bg-gradient-primary">
+              <ArrowUpCircle className="w-4 h-4 mr-2" />
+              Upgrade to Premium
+            </Button>
+          )}
+        </div>
 
-          {/* Usage Stats */}
-          <Card className="p-4 bg-gradient-card">
+        {/* Stats Card */}
+        <Card className="mb-8">
+          <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">
-                  {isPremium ? "Premium Plan" : "Free Plan"}
-                </p>
-                <p className="text-2xl font-bold">
-                  {conversionsToday} / {isPremium ? "∞" : limits.daily} conversions today
-                </p>
+                <CardTitle>Usage Stats</CardTitle>
+                <CardDescription>Your current plan and usage</CardDescription>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-muted-foreground">Max file size</p>
-                <p className="text-lg font-semibold">
-                  {limits.fileSize / (1024 * 1024)}MB
-                </p>
+              <Badge variant={isPremium ? "default" : "secondary"} className="text-sm">
+                {isPremium ? "Premium" : "Free"} Plan
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Conversions Today</span>
+                <span className="text-2xl font-bold">
+                  {conversionCount} / {limits.daily === Infinity ? '∞' : limits.daily}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Max File Size</span>
+                <span className="text-lg font-semibold">
+                  {limits.fileSize / (1024 * 1024)} MB
+                </span>
               </div>
             </div>
-          </Card>
+          </CardContent>
+        </Card>
 
-          {/* Upload Area */}
-          <Card
-            className={`p-12 border-2 border-dashed transition-all duration-300 cursor-pointer ${
-              isDragging
-                ? "border-primary bg-primary/5 scale-105"
-                : "border-border hover:border-primary/50 bg-gradient-card"
-            }`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className="text-center space-y-4">
-              <div className="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto">
-                <Upload className="h-10 w-10 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Drag & drop your files here
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  or click to browse from your device
-                </p>
-              </div>
-              <input
-                type="file"
-                id="file-upload"
-                className="hidden"
-                onChange={handleFileSelect}
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              />
-              <label htmlFor="file-upload">
-                <Button asChild className="bg-gradient-primary cursor-pointer">
-                  <span>Choose File</span>
-                </Button>
-              </label>
-              <div className="pt-4 text-sm text-muted-foreground">
-                <p>Supported formats: PDF, Word, JPG, PNG</p>
-                <p>Max file size: {limits.fileSize / (1024 * 1024)}MB</p>
-              </div>
-            </div>
-          </Card>
-
-          {/* Conversion Options */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="p-6 bg-gradient-card hover:border-primary/50 transition-all group cursor-pointer">
-              <div className="flex items-center space-x-4">
-                <div className="bg-primary/10 p-3 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <FileText className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">PDF to Word</h4>
-                  <p className="text-sm text-muted-foreground">Editable documents</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-gradient-card hover:border-primary/50 transition-all group cursor-pointer">
-              <div className="flex items-center space-x-4">
-                <div className="bg-accent/10 p-3 rounded-lg group-hover:bg-accent/20 transition-colors">
-                  <Image className="h-6 w-6 text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Image Convert</h4>
-                  <p className="text-sm text-muted-foreground">JPG, PNG, WebP</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-gradient-card hover:border-primary/50 transition-all group cursor-pointer">
-              <div className="flex items-center space-x-4">
-                <div className="bg-primary/10 p-3 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <FileType className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Word to PDF</h4>
-                  <p className="text-sm text-muted-foreground">Share-ready files</p>
-                </div>
-              </div>
-            </Card>
+        {/* Conversion Options */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Conversion Tools</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ConversionCard
+              icon={Image}
+              title="Images to PDF"
+              description="Combine multiple images into a single PDF"
+              acceptedFiles="image/*"
+              multipleFiles={true}
+              onConvert={handleImagesToPdf}
+            />
+            
+            <ConversionCard
+              icon={FileSpreadsheet}
+              title="Excel to CSV"
+              description="Convert Excel files to CSV format"
+              acceptedFiles=".xlsx,.xls"
+              onConvert={handleExcelToCsv}
+            />
+            
+            <ConversionCard
+              icon={FileSpreadsheet}
+              title="CSV to Excel"
+              description="Convert CSV files to Excel format"
+              acceptedFiles=".csv"
+              onConvert={handleCsvToExcel}
+            />
+            
+            <ConversionCard
+              icon={FileText}
+              title="Text to PDF"
+              description="Convert text files to PDF"
+              acceptedFiles=".txt"
+              onConvert={handleTextToPdf}
+            />
+            
+            <ConversionCard
+              icon={Combine}
+              title="Merge PDFs"
+              description="Combine multiple PDFs into one"
+              acceptedFiles=".pdf"
+              multipleFiles={true}
+              onConvert={handleMergePdfs}
+            />
+            
+            <ConversionCard
+              icon={Split}
+              title="Split PDF"
+              description="Split PDF into individual pages"
+              acceptedFiles=".pdf"
+              onConvert={handleSplitPdf}
+            />
+            
+            <ConversionCard
+              icon={Minimize2}
+              title="Compress Image"
+              description="Reduce image file size"
+              acceptedFiles="image/*"
+              onConvert={handleCompressImage}
+            />
           </div>
-
-          {/* Recent Conversions */}
-          <Card className="p-6 bg-gradient-card">
-            <h3 className="text-xl font-semibold mb-4">Recent Conversions</h3>
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No conversions yet. Upload a file to get started!</p>
-            </div>
-          </Card>
         </div>
       </div>
     </div>

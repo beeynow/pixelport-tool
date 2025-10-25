@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FileType, Menu, X, User } from "lucide-react";
 import { useState } from "react";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,6 +40,7 @@ const Navbar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <SignedOut>
               <Button variant="ghost" asChild>
                 <Link to="/auth/sign-in">Sign In</Link>
@@ -99,6 +101,9 @@ const Navbar = () => {
               </Link>
             </SignedIn>
             <div className="flex flex-col space-y-2 pt-4">
+              <div className="px-4">
+                <ThemeToggle />
+              </div>
               <SignedOut>
                 <Button variant="ghost" asChild>
                   <Link to="/auth/sign-in">Sign In</Link>

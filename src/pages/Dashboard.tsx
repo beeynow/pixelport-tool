@@ -1,207 +1,177 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Image, 
-  FileSpreadsheet, 
-  FileText,
-  Combine,
-  Split,
-  Minimize2,
-  ArrowUpCircle
-} from "lucide-react";
-import Navbar from "@/components/Navbar";
-import { CONVERSION_LIMITS } from "@/lib/clerk";
 import { useConversionTracking } from "@/hooks/useConversionTracking";
-import { ConversionCard } from "@/components/ConversionCard";
-import * as conversions from "@/lib/conversions";
+import Navbar from "@/components/Navbar";
+import { Link } from "react-router-dom";
+import { 
+  FileText, 
+  FileImage, 
+  FileCode, 
+  FileVideo,
+  Sparkles,
+  ArrowRight,
+  Crown
+} from "lucide-react";
 
-const Dashboard = () => {
+export default function Dashboard() {
   const { user } = useUser();
-  const [conversionCount, setConversionCount] = useState(0);
-  const [subscriptionTier, setSubscriptionTier] = useState<'free' | 'premium'>('free');
   const { getConversionStats } = useConversionTracking();
+  const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
     loadStats();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadStats = async () => {
-    const stats = await getConversionStats();
-    if (stats) {
-      setConversionCount(stats.conversions_today);
-      setSubscriptionTier(stats.subscription_tier as 'free' | 'premium');
-    }
+    const data = await getConversionStats();
+    setStats(data);
   };
 
-  const isPremium = subscriptionTier === 'premium';
-  const limits = isPremium ? CONVERSION_LIMITS.PREMIUM : CONVERSION_LIMITS.FREE;
-
-  const handleImagesToPdf = async (files: File[]) => {
-    const blob = await conversions.convertImagesToPdf(files);
-    conversions.downloadFile(blob, 'images-to-pdf.pdf');
-    await loadStats();
-  };
-
-  const handleExcelToCsv = async (files: File[]) => {
-    const blob = await conversions.convertExcelToCsv(files[0]);
-    conversions.downloadFile(blob, 'converted.csv');
-    await loadStats();
-  };
-
-  const handleCsvToExcel = async (files: File[]) => {
-    const blob = await conversions.convertCsvToExcel(files[0]);
-    conversions.downloadFile(blob, 'converted.xlsx');
-    await loadStats();
-  };
-
-  const handleTextToPdf = async (files: File[]) => {
-    const blob = await conversions.convertTextToPdf(files[0]);
-    conversions.downloadFile(blob, 'text-to-pdf.pdf');
-    await loadStats();
-  };
-
-  const handleMergePdfs = async (files: File[]) => {
-    const blob = await conversions.mergePdfs(files);
-    conversions.downloadFile(blob, 'merged.pdf');
-    await loadStats();
-  };
-
-  const handleSplitPdf = async (files: File[]) => {
-    const blobs = await conversions.splitPdf(files[0]);
-    blobs.forEach((blob, index) => {
-      conversions.downloadFile(blob, `page-${index + 1}.pdf`);
-    });
-    await loadStats();
-  };
-
-  const handleCompressImage = async (files: File[]) => {
-    const blob = await conversions.compressImage(files[0], 0.6);
-    conversions.downloadFile(blob, 'compressed.jpg');
-    await loadStats();
-  };
+  const conversionCategories = [
+    {
+      title: "PDF Tools",
+      icon: FileText,
+      description: "Convert, merge, split PDFs",
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
+    },
+    {
+      title: "Image Tools",
+      icon: FileImage,
+      description: "Convert & compress images",
+      color: "text-green-500",
+      bgColor: "bg-green-500/10",
+    },
+    {
+      title: "Document Tools",
+      icon: FileCode,
+      description: "Word, Excel, CSV conversions",
+      color: "text-purple-500",
+      bgColor: "bg-purple-500/10",
+    },
+    {
+      title: "Media Tools",
+      icon: FileVideo,
+      description: "Audio & video processing",
+      color: "text-orange-500",
+      bgColor: "bg-orange-500/10",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-hero">
       <Navbar />
       
-      <div className="container mx-auto px-4 pt-24 pb-12">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
-            <p className="text-muted-foreground">
-              Welcome back, {user?.firstName || user?.username}!
-            </p>
-          </div>
-          {!isPremium && (
-            <Button className="bg-gradient-primary">
-              <ArrowUpCircle className="w-4 h-4 mr-2" />
-              Upgrade to Premium
-            </Button>
-          )}
+      <div className="container mx-auto px-4 py-24">
+        {/* Welcome Section */}
+        <div className="mb-12 animate-fade-in-up">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Welcome back, <span className="bg-gradient-primary bg-clip-text text-transparent">{user?.firstName || "User"}</span>
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Your file conversion dashboard
+          </p>
         </div>
 
-        {/* Stats Card */}
-        <Card className="mb-8">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>Usage Stats</CardTitle>
-                <CardDescription>Your current plan and usage</CardDescription>
-              </div>
-              <Badge variant={isPremium ? "default" : "secondary"} className="text-sm">
-                {isPremium ? "Premium" : "Free"} Plan
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">Conversions Today</span>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card className="border-primary/20 shadow-soft hover:shadow-glow transition-all duration-300">
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Plan</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-2">
+                <Crown className="w-5 h-5 text-primary" />
                 <span className="text-2xl font-bold">
-                  {conversionCount} / {limits.daily === Infinity ? '∞' : limits.daily}
+                  {stats?.subscription_tier === 'premium' ? 'Premium' : 'Free'}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">Max File Size</span>
-                <span className="text-lg font-semibold">
-                  {limits.fileSize / (1024 * 1024)} MB
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        {/* Conversion Options */}
-        <div>
+          <Card className="border-primary/20 shadow-soft hover:shadow-glow transition-all duration-300">
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Today's Conversions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {stats?.conversions_today || 0}
+                <span className="text-sm text-muted-foreground ml-2">
+                  / {stats?.subscription_tier === 'premium' ? 'Unlimited' : '50'}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-primary/20 shadow-soft hover:shadow-glow transition-all duration-300">
+            <CardHeader>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Max File Size</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {stats?.subscription_tier === 'premium' ? '100MB' : '10MB'}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Upgrade Banner for Free Users */}
+        {stats?.subscription_tier === 'free' && (
+          <Card className="mb-12 bg-gradient-primary border-0 text-white shadow-glow animate-scale-in">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                Upgrade to Premium
+              </CardTitle>
+              <CardDescription className="text-white/80">
+                Get unlimited conversions, larger file sizes, and priority processing
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
+                Upgrade Now
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Conversion Categories */}
+        <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6">Conversion Tools</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ConversionCard
-              icon={Image}
-              title="Images to PDF"
-              description="Combine multiple images into a single PDF"
-              acceptedFiles="image/*"
-              multipleFiles={true}
-              onConvert={handleImagesToPdf}
-            />
-            
-            <ConversionCard
-              icon={FileSpreadsheet}
-              title="Excel to CSV"
-              description="Convert Excel files to CSV format"
-              acceptedFiles=".xlsx,.xls"
-              onConvert={handleExcelToCsv}
-            />
-            
-            <ConversionCard
-              icon={FileSpreadsheet}
-              title="CSV to Excel"
-              description="Convert CSV files to Excel format"
-              acceptedFiles=".csv"
-              onConvert={handleCsvToExcel}
-            />
-            
-            <ConversionCard
-              icon={FileText}
-              title="Text to PDF"
-              description="Convert text files to PDF"
-              acceptedFiles=".txt"
-              onConvert={handleTextToPdf}
-            />
-            
-            <ConversionCard
-              icon={Combine}
-              title="Merge PDFs"
-              description="Combine multiple PDFs into one"
-              acceptedFiles=".pdf"
-              multipleFiles={true}
-              onConvert={handleMergePdfs}
-            />
-            
-            <ConversionCard
-              icon={Split}
-              title="Split PDF"
-              description="Split PDF into individual pages"
-              acceptedFiles=".pdf"
-              onConvert={handleSplitPdf}
-            />
-            
-            <ConversionCard
-              icon={Minimize2}
-              title="Compress Image"
-              description="Reduce image file size"
-              acceptedFiles="image/*"
-              onConvert={handleCompressImage}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {conversionCategories.map((category, index) => (
+              <Card 
+                key={index} 
+                className="group hover:shadow-glow transition-all duration-300 cursor-pointer border-border/50 hover:border-primary/50"
+              >
+                <CardHeader>
+                  <div className={`w-12 h-12 rounded-lg ${category.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <category.icon className={`w-6 h-6 ${category.color}`} />
+                  </div>
+                  <CardTitle className="text-lg">{category.title}</CardTitle>
+                  <CardDescription>{category.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
           </div>
+        </div>
+
+        {/* Quick Action Button */}
+        <div className="text-center">
+          <Button 
+            size="lg" 
+            className="bg-gradient-primary hover:opacity-90 transition-opacity group"
+            asChild
+          >
+            <Link to="/conversions">
+              Start Converting
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}

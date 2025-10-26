@@ -32,6 +32,9 @@ const Navbar = () => {
               Pricing
             </Link>
             <SignedIn>
+              <Link to="/conversions" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+                Conversions
+              </Link>
               <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
                 Dashboard
               </Link>
@@ -92,6 +95,13 @@ const Navbar = () => {
               Pricing
             </Link>
             <SignedIn>
+              <Link
+                to="/conversions"
+                className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Conversions
+              </Link>
               <Link
                 to="/dashboard"
                 className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"

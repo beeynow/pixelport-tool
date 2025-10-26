@@ -8,6 +8,7 @@ import { CLERK_PUBLISHABLE_KEY } from "@/lib/clerk";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Conversions from "./pages/Conversions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/conversions"
+              element={
+                <ProtectedRoute>
+                  <Conversions />
                 </ProtectedRoute>
               }
             />

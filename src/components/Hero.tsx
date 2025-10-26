@@ -16,21 +16,21 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border shadow-soft">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">Fast & Secure File Conversion</span>
+            <span className="text-sm font-medium">Free Online File Converter</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            Convert Your Files{" "}
+            Free Online File Converter{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Instantly
+              PDF, Word, Image & Video
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Transform PDFs, images, and documents in seconds. No software installation required. 
-            Just drag, drop, and download.
+            Convert PDF to Word, image to PDF, compress images, and more. Free batch file converter with OCR. 
+            Fast, secure, and no software installation required.
           </p>
 
           {/* CTA Buttons */}
@@ -40,8 +40,8 @@ const Hero = () => {
               asChild
               className="bg-gradient-primary hover:opacity-90 transition-all shadow-glow text-lg px-8 py-6 group"
             >
-              <Link to="/dashboard">
-                Upload Your File Now
+              <Link to="/conversions">
+                Start Converting Files Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -52,7 +52,7 @@ const Hero = () => {
               className="text-lg px-8 py-6 border-2 hover:border-primary hover:bg-primary/5"
             >
               <Link to="/#features">
-                See How It Works
+                Explore All Tools
               </Link>
             </Button>
           </div>

@@ -4,33 +4,33 @@ import { Card } from "@/components/ui/card";
 const features = [
   {
     icon: Zap,
-    title: "Lightning Fast",
-    description: "Convert your files in seconds with our optimized conversion engine. No waiting, just results.",
+    title: "Lightning Fast Conversion",
+    description: "Convert PDF to Word, compress images, and process files in seconds. Our free online file converter delivers instant results.",
   },
   {
     icon: Shield,
-    title: "100% Secure",
-    description: "Your files are encrypted and automatically deleted after 24 hours. Privacy is our priority.",
+    title: "100% Secure & Private",
+    description: "Your files are encrypted during conversion and automatically deleted after 24 hours. Your privacy is guaranteed.",
   },
   {
     icon: FileType,
-    title: "Multiple Formats",
-    description: "Support for PDF, Word, JPG, PNG, and more. Convert between any format seamlessly.",
+    title: "OCR & Format Support",
+    description: "OCR PDF to text, convert scanned documents, JPG to PNG, Word to PDF, EPUB to PDF, and 50+ more formats supported.",
   },
   {
     icon: Download,
     title: "Instant Download",
-    description: "Get your converted files immediately. No queues, no delays, just instant downloads.",
+    description: "Download converted files immediately. No email required, no sign-up, just instant access to your files.",
   },
   {
     icon: Sparkles,
-    title: "AI-Powered",
-    description: "Premium users get access to AI-enhanced conversions for perfect quality every time.",
+    title: "Image Compression Tool",
+    description: "Free online image compression tool reduces file size while maintaining quality. Perfect for web optimization.",
   },
   {
     icon: Clock,
-    title: "Batch Processing",
-    description: "Convert multiple files at once and save time. Perfect for professionals with heavy workloads.",
+    title: "Batch File Converter",
+    description: "Convert multiple files at once with our batch converter. Upload up to 20 files and convert them simultaneously.",
   },
 ];
 
@@ -40,13 +40,14 @@ const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold">
-            Why Choose{" "}
+            Best Free{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              ConvertMe
+              Online File Converter
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            The most powerful and user-friendly file conversion platform available today.
+            PDF editor online free, image converter, video to MP3 converter, and more. 
+            Everything you need for file conversion in one place.
           </p>
         </div>
 

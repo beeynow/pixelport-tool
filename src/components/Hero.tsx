@@ -21,16 +21,15 @@ const Hero = () => {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            Free Online File Converter{" "}
+            Convert Files Online Instantly{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              PDF, Word, Image & Video
+              PDF, Image, Audio & Video
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Convert PDF to Word, image to PDF, compress images, and more. Free batch file converter with OCR. 
-            Fast, secure, and no software installation required.
+            Fast, secure, and free file conversion. No signup required.
           </p>
 
           {/* CTA Buttons */}
@@ -38,21 +37,11 @@ const Hero = () => {
             <Button 
               size="lg" 
               asChild
-              className="bg-gradient-primary hover:opacity-90 transition-all shadow-glow text-lg px-8 py-6 group"
+              className="bg-gradient-primary hover:opacity-90 transition-all shadow-glow text-lg px-10 py-7 group rounded-full"
             >
               <Link to="/conversions">
-                Start Converting Files Free
+                Upload Your File
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              asChild
-              className="text-lg px-8 py-6 border-2 hover:border-primary hover:bg-primary/5"
-            >
-              <Link to="/#features">
-                Explore All Tools
               </Link>
             </Button>
           </div>

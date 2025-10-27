@@ -1,8 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Features from "@/components/Features";
 import PopularConversions from "@/components/PopularConversions";
-import Pricing from "@/components/Pricing";
+import QuickUpload from "@/components/QuickUpload";
+import HowItWorks from "@/components/HowItWorks";
+import Features from "@/components/Features";
+import TrustSection from "@/components/TrustSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -11,8 +13,10 @@ const Index = () => {
       <Navbar />
       <Hero />
       <PopularConversions />
+      <QuickUpload />
+      <HowItWorks />
       <Features />
-      <Pricing />
+      <TrustSection />
       <Footer />
     </div>
   );

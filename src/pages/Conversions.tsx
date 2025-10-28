@@ -2,11 +2,12 @@ import { useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import { 
   Upload, FileText, Image as ImageIcon, Film, Music, CheckCircle2, Loader2, 
-  FileCode, Package, ArrowLeft, Wand2
+  FileCode, Package, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import {
   convertPdfToWord,
@@ -48,11 +49,11 @@ type ConversionTool = {
 };
 
 export default function Conversions() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [currentTool, setCurrentTool] = useState<string>("");
   const { toast } = useToast();
 
   const categories: Category[] = [
@@ -157,7 +158,7 @@ export default function Conversions() {
       acceptedFiles: "image/*",
       categoryId: "image",
       handler: async (files) => {
-        const blob = await compressImage(files[0], 0.7);
+        const blob = await compressImage(files[0], 0.5);
         downloadFile(blob, 'compressed.jpg');
       }
     },
@@ -788,6 +789,7 @@ export default function Conversions() {
     if (files.length > 0) {
       setSelectedFiles(files);
       setCompleted(false);
+      setCurrentTool(tool.name);
       handleConvert(tool, files);
     }
   }, []);
@@ -798,8 +800,11 @@ export default function Conversions() {
 
     try {
       const progressInterval = setInterval(() => {
-        setProgress(prev => Math.min(prev + 10, 90));
-      }, 200);
+        setProgress(prev => {
+          const newProgress = prev + 5;
+          return Math.min(newProgress, 95);
+        });
+      }, 150);
 
       await tool.handler(files);
 
@@ -808,14 +813,15 @@ export default function Conversions() {
       setCompleted(true);
 
       toast({
-        title: "Conversion complete!",
-        description: "Your file has been downloaded successfully.",
+        title: "✓ Conversion complete!",
+        description: "Your file has been optimized and downloaded successfully.",
       });
 
       setTimeout(() => {
         setSelectedFiles([]);
         setProgress(0);
         setCompleted(false);
+        setCurrentTool("");
       }, 3000);
     } catch (error) {
       toast({
@@ -823,42 +829,63 @@ export default function Conversions() {
         description: "There was an error converting your file. Please try again.",
         variant: "destructive"
       });
+      setProgress(0);
+      setCurrentTool("");
     } finally {
       setConverting(false);
     }
   }, [toast]);
 
-  const currentCategory = categories.find(c => c.id === selectedCategory);
-  const toolsInCategory = conversionTools.filter(t => t.categoryId === selectedCategory);
+  const getToolsByCategory = (categoryId: string) => 
+    conversionTools.filter(t => t.categoryId === categoryId);
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
       <Navbar />
       
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            {selectedCategory ? currentCategory?.name : "Free Online File Converter"}
+      <div className="container mx-auto px-4 pt-24 pb-12">
+        {/* Header */}
+        <div className="text-center mb-12 animate-fade-in space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">62 Powerful Tools</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-200 animate-gradient">
+            Free Online File Converter
           </h1>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            {selectedCategory 
-              ? currentCategory?.description 
-              : "Choose a category to explore powerful file conversion tools"}
+            Convert images, documents, audio, video and more with lightning speed
           </p>
         </div>
 
         {/* Conversion Progress */}
         {converting && (
-          <div className="max-w-2xl mx-auto mb-8 animate-fade-in">
-            <Card>
+          <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
+            <Card className="border-2 border-primary/30 bg-gradient-to-br from-card/95 to-primary/5 backdrop-blur shadow-glow">
               <CardContent className="p-8">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center justify-center gap-3">
-                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                    <p className="text-lg font-semibold">Converting your file...</p>
+                    <div className="relative">
+                      <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                      <div className="absolute inset-0 blur-xl bg-primary/30 animate-pulse" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xl font-bold">Converting {currentTool}</p>
+                      <p className="text-sm text-muted-foreground">Optimizing file size...</p>
+                    </div>
                   </div>
-                  <Progress value={progress} className="h-3" />
-                  <p className="text-center text-sm text-muted-foreground">{progress}% complete</p>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm font-medium">
+                      <span>{progress < 100 ? 'Processing...' : 'Complete!'}</span>
+                      <span className="text-primary text-lg font-bold">{progress}%</span>
+                    </div>
+                    <Progress value={progress} className="h-4 bg-muted/50" />
+                  </div>
+                  
+                  <p className="text-center text-xs text-muted-foreground">
+                    File will be auto-deleted after download
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -867,14 +894,14 @@ export default function Conversions() {
 
         {/* Success Message */}
         {completed && (
-          <div className="max-w-2xl mx-auto mb-8 animate-fade-in">
-            <Card className="border-2 border-primary/50 bg-primary/5">
+          <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
+            <Card className="border-2 border-primary bg-gradient-to-br from-primary/20 via-primary/10 to-transparent backdrop-blur shadow-glow">
               <CardContent className="p-8">
-                <div className="flex items-center justify-center gap-3 text-primary">
-                  <CheckCircle2 className="w-8 h-8" />
+                <div className="flex items-center justify-center gap-4 text-primary">
+                  <CheckCircle2 className="w-12 h-12 animate-pulse" />
                   <div>
-                    <p className="text-lg font-semibold">File downloaded successfully!</p>
-                    <p className="text-sm text-muted-foreground">Your file has been securely removed from our system</p>
+                    <p className="text-2xl font-bold">Success!</p>
+                    <p className="text-sm text-foreground/80">File downloaded & deleted from system</p>
                   </div>
                 </div>
               </CardContent>
@@ -882,100 +909,92 @@ export default function Conversions() {
           </div>
         )}
 
-        {!selectedCategory ? (
-          // Category Selection View
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {categories.map((category, index) => (
-              <Card 
-                key={category.id}
-                className="cursor-pointer hover:shadow-glow transition-all hover:border-primary/50 animate-fade-in group"
-                style={{ animationDelay: `${index * 0.1}s` }}
-                onClick={() => setSelectedCategory(category.id)}
+        {/* Tabs Navigation */}
+        <Tabs defaultValue="image" className="max-w-7xl mx-auto">
+          <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-card/50 backdrop-blur p-2 mb-8 border border-border/50 rounded-xl">
+            {categories.map((category) => (
+              <TabsTrigger 
+                key={category.id} 
+                value={category.id}
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg transition-all hover:scale-105"
               >
-                <CardHeader>
-                  <div className={`w-16 h-16 rounded-xl ${category.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <category.icon className={`w-8 h-8 ${category.color}`} />
-                  </div>
-                  <CardTitle className="text-2xl group-hover:text-primary transition-colors">
-                    {category.name}
-                  </CardTitle>
-                  <CardDescription className="text-base">
-                    {category.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      {category.count} tools available
-                    </span>
-                    <Button variant="ghost" size="sm" className="group-hover:text-primary">
-                      Explore →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                <category.icon className="w-4 h-4" />
+                <span className="font-semibold">{category.name.replace(' Conversion', '')}</span>
+                <span className="text-xs opacity-70 ml-1">({category.count})</span>
+              </TabsTrigger>
             ))}
-          </div>
-        ) : (
-          // Tools List View
-          <div className="max-w-6xl mx-auto space-y-6">
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedCategory(null)}
-              className="mb-4"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Categories
-            </Button>
+          </TabsList>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {toolsInCategory.map((tool, index) => (
-                <Card 
-                  key={tool.id}
-                  className="hover:shadow-soft transition-all hover:border-primary/50 animate-fade-in"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2">{tool.name}</h3>
-                        <p className="text-sm text-muted-foreground">{tool.description}</p>
+          {/* Tab Contents */}
+          {categories.map((category) => (
+            <TabsContent key={category.id} value={category.id} className="mt-0">
+              <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-card/80 to-primary/5 backdrop-blur border border-border/50">
+                <h2 className="text-2xl font-bold mb-2">{category.name}</h2>
+                <p className="text-muted-foreground">{category.description}</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {getToolsByCategory(category.id).map((tool, index) => (
+                  <Card 
+                    key={tool.id}
+                    className="group hover:shadow-glow hover:border-primary/50 transition-all hover:scale-105 animate-fade-in bg-card/50 backdrop-blur"
+                    style={{ animationDelay: `${index * 0.03}s` }}
+                  >
+                    <CardContent className="p-5">
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-2">
+                          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <FileCode className="w-5 h-5 text-primary" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
+                              {tool.name}
+                            </h3>
+                            <p className="text-xs text-muted-foreground line-clamp-2">
+                              {tool.description}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <label className="cursor-pointer block">
+                          <Button 
+                            className="w-full group-hover:shadow-lg transition-all"
+                            disabled={converting}
+                            size="sm"
+                            asChild
+                          >
+                            <span>
+                              <Upload className="w-3 h-3 mr-2" />
+                              {tool.multipleFiles ? "Upload Files" : "Upload"}
+                            </span>
+                          </Button>
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept={tool.acceptedFiles}
+                            multiple={tool.multipleFiles}
+                            onChange={(e) => handleFileSelect(e, tool)}
+                          />
+                        </label>
                       </div>
-                      
-                      <label className="cursor-pointer">
-                        <Button 
-                          className="w-full"
-                          disabled={converting}
-                          asChild
-                        >
-                          <span>
-                            <Upload className="w-4 h-4 mr-2" />
-                            {tool.multipleFiles ? "Upload Files" : "Upload File"}
-                          </span>
-                        </Button>
-                        <input
-                          type="file"
-                          className="hidden"
-                          accept={tool.acceptedFiles}
-                          multiple={tool.multipleFiles}
-                          onChange={(e) => handleFileSelect(e, tool)}
-                        />
-                      </label>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
 
         {/* Privacy Notice */}
-        <div className="max-w-4xl mx-auto mt-12">
-          <Card className="bg-muted/50">
-            <CardContent className="p-6 text-center">
-              <p className="text-sm text-muted-foreground">
-                🔒 <strong>100% Private & Secure:</strong> All conversions happen in your browser. 
-                Files are never uploaded to servers and are permanently deleted after download.
+        <div className="max-w-4xl mx-auto mt-16">
+          <Card className="bg-gradient-to-r from-muted/80 to-primary/5 backdrop-blur border-2 border-primary/20">
+            <CardContent className="p-8 text-center">
+              <p className="text-sm text-foreground/80 flex items-center justify-center gap-2 flex-wrap">
+                <span className="text-2xl">🔒</span>
+                <strong className="text-primary">100% Private & Secure:</strong> 
+                All conversions happen in your browser. 
+                <span className="font-semibold">Files are never uploaded to servers</span> and are 
+                <span className="font-semibold text-primary">permanently deleted after download.</span>
               </p>
             </CardContent>
           </Card>

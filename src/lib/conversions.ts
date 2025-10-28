@@ -114,13 +114,26 @@ export const compressImage = async (file: File, quality: number = 0.8): Promise<
   const img = await loadImage(dataUrl);
   
   const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
+  
+  // Reduce dimensions for smaller file size
+  const maxWidth = 1920;
+  const maxHeight = 1920;
+  let width = img.width;
+  let height = img.height;
+  
+  if (width > maxWidth || height > maxHeight) {
+    const ratio = Math.min(maxWidth / width, maxHeight / height);
+    width = width * ratio;
+    height = height * ratio;
+  }
+  
+  canvas.width = width;
+  canvas.height = height;
   
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Could not get canvas context');
   
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 0, 0, width, height);
   
   return new Promise((resolve) => {
     canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', quality);
@@ -225,17 +238,31 @@ export const convertImageFormat = async (
   const img = await loadImage(dataUrl);
   
   const canvas = document.createElement('canvas');
-  canvas.width = img.width;
-  canvas.height = img.height;
+  
+  // Optimize dimensions
+  const maxDimension = 2400;
+  let width = img.width;
+  let height = img.height;
+  
+  if (width > maxDimension || height > maxDimension) {
+    const ratio = maxDimension / Math.max(width, height);
+    width = width * ratio;
+    height = height * ratio;
+  }
+  
+  canvas.width = width;
+  canvas.height = height;
   
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Could not get canvas context');
   
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 0, 0, width, height);
   
   const mimeType = `image/${targetFormat}`;
+  const quality = targetFormat === 'jpeg' ? 0.85 : 0.90;
+  
   return new Promise((resolve) => {
-    canvas.toBlob((blob) => resolve(blob!), mimeType, 0.95);
+    canvas.toBlob((blob) => resolve(blob!), mimeType, quality);
   });
 };
 

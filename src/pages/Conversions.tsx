@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import { 
   Upload, FileText, Image as ImageIcon, Film, Music, CheckCircle2, Loader2, 
@@ -840,10 +841,21 @@ export default function Conversions() {
     conversionTools.filter(t => t.categoryId === categoryId);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
-      <Navbar />
+    <>
+      <Helmet>
+        <title>File Conversions - ConvertMe | 62 Powerful Tools</title>
+        <meta
+          name="description"
+          content="Convert files instantly with 62+ professional tools. Images, documents, audio, video, and more. Fast, secure, and free online file conversion."
+        />
+        <meta name="keywords" content="file conversion tools, image converter, PDF converter, video converter, audio converter, batch conversion" />
+        <link rel="canonical" href="https://convertme.app/conversions" />
+      </Helmet>
+
+      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+        <Navbar />
       
-      <div className="container mx-auto px-4 pt-24 pb-12">
+        <div className="container mx-auto px-4 pt-24 pb-12">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
@@ -999,7 +1011,8 @@ export default function Conversions() {
             </CardContent>
           </Card>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

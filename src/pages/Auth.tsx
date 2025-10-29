@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { SignIn, SignUp } from "@clerk/clerk-react";
 import { FileType } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import { 
   Upload, FileText, Image as ImageIcon, Film, Music, CheckCircle2, Loader2, 

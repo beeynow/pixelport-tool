@@ -7,11 +7,8 @@ const CookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("cookie-consent");
-    if (!consent) {
-      // Delay showing banner slightly for better UX
-      setTimeout(() => setShowBanner(true), 1000);
-    }
+    // Show banner every time user enters the site
+    setTimeout(() => setShowBanner(true), 1000);
   }, []);
 
   const handleAccept = () => {

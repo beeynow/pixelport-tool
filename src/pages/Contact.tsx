@@ -1,5 +1,7 @@
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,8 +10,16 @@ import { Mail, MessageSquare, HelpCircle } from "lucide-react";
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
+    <>
+      <Helmet>
+        <title>Contact Us - Free Online File Converter | ConvertMe</title>
+        <meta name="description" content="Contact ConvertMe support. Get help with our free online file converter. Questions about PDF, image, audio, or video conversion? We're here to help." />
+        <meta name="keywords" content="contact, support, file converter help, customer service" />
+        <link rel="canonical" href="https://convertme.app/contact" />
+      </Helmet>
+      
+      <div className="min-h-screen bg-gradient-hero">
+        <Navbar />
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-4">
@@ -85,6 +95,8 @@ export default function Contact() {
         </div>
       </div>
       <Footer />
+      <CookieConsent />
     </div>
+    </>
   );
 }

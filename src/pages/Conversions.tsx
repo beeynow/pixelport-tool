@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
+import CookieConsent from "@/components/CookieConsent";
 import { 
   Upload, FileText, Image as ImageIcon, Film, Music, CheckCircle2, Loader2, 
   FileCode, Package, Sparkles
@@ -843,13 +844,15 @@ export default function Conversions() {
   return (
     <>
       <Helmet>
-        <title>File Conversions - ConvertMe | 62 Powerful Tools</title>
+        <title>Free Online File Converter - 62+ Tools | PDF, Image, Audio, Video | ConvertMe</title>
         <meta
           name="description"
-          content="Convert files instantly with 62+ professional tools. Images, documents, audio, video, and more. Fast, secure, and free online file conversion."
+          content="Free online file converter with 62+ tools. Convert PDF to Word, JPG to PNG, MP4 to MP3, and more. No signup required. Fast, secure, 100% free forever."
         />
-        <meta name="keywords" content="file conversion tools, image converter, PDF converter, video converter, audio converter, batch conversion" />
+        <meta name="keywords" content="free online converter, PDF to Word, JPG to PNG, image converter, video converter, audio converter, file conversion tools, convert files online free" />
         <link rel="canonical" href="https://convertme.app/conversions" />
+        <meta property="og:title" content="Free Online File Converter - 62+ Tools" />
+        <meta property="og:description" content="Convert files online free with our 62+ conversion tools. No signup required." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
@@ -1012,6 +1015,7 @@ export default function Conversions() {
           </Card>
         </div>
         </div>
+        <CookieConsent />
       </div>
     </>
   );

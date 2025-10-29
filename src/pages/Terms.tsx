@@ -1,10 +1,20 @@
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
+    <>
+      <Helmet>
+        <title>Terms of Service - Free Online File Converter | ConvertMe</title>
+        <meta name="description" content="Terms of Service for ConvertMe free online file converter. Review our usage terms and conditions for PDF, image, audio, and video conversion services." />
+        <meta name="keywords" content="terms of service, terms and conditions, usage policy, file converter terms" />
+        <link rel="canonical" href="https://convertme.app/terms" />
+      </Helmet>
+      
+      <div className="min-h-screen bg-gradient-hero">
+        <Navbar />
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto space-y-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Terms of Service</h1>
@@ -59,6 +69,8 @@ export default function Terms() {
         </div>
       </div>
       <Footer />
+      <CookieConsent />
     </div>
+    </>
   );
 }

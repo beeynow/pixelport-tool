@@ -1,76 +1,78 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CookieConsent from "@/components/CookieConsent";
 
 export default function Terms() {
   return (
     <>
-      <Helmet>
-        <title>Terms of Service - Free Online File Converter | ConvertMe</title>
-        <meta name="description" content="Terms of Service for ConvertMe free online file converter. Review our usage terms and conditions for PDF, image, audio, and video conversion services." />
-        <meta name="keywords" content="terms of service, terms and conditions, usage policy, file converter terms" />
-        <link rel="canonical" href="https://convertme.app/terms" />
+<Helmet>
+        <title>Terms & Conditions | ConvertAny.site</title>
+        <meta name="description" content="Terms and Conditions for ConvertAny.site - Free online file converter usage terms." />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       
-      <div className="min-h-screen bg-gradient-hero">
+      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
         <Navbar />
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Terms of Service</h1>
-          
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Acceptance of Terms</h2>
-            <p className="text-muted-foreground">
-              By using Free File Converter, you agree to these terms of service. If you do not agree, 
-              please do not use our service.
+        
+        <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
+          <div className="max-w-4xl mx-auto prose prose-lg dark:prose-invert">
+            <h1>Terms & Conditions</h1>
+            <p className="lead">Effective Date: October 2025</p>
+            
+            <p>
+              Welcome to ConvertAny.site. By accessing or using this website, you agree to the following terms and conditions.
             </p>
-          </section>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Service Description</h2>
-            <p className="text-muted-foreground">
-              Free File Converter provides free, browser-based file conversion tools. All processing 
-              happens locally in your browser.
+            <h2>1. General Use</h2>
+            <p>
+              ConvertAny.site provides free online file conversion tools. You agree to use our tools responsibly and not for illegal, harmful, or infringing purposes.
             </p>
-          </section>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">User Responsibilities</h2>
-            <p className="text-muted-foreground">
-              You are responsible for the files you convert and must ensure you have the right to 
-              convert and use them. Do not use our service for illegal purposes.
+            <h2>2. Intellectual Property</h2>
+            <p>
+              All text, design, images, and software code on this website are owned or licensed by ConvertAny.site. You may not copy, reproduce, distribute, or create derivative works from our content without prior written permission.
             </p>
-          </section>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Limitations</h2>
-            <p className="text-muted-foreground">
-              Our service is provided "as is" without warranties. We are not liable for any data loss 
-              or damages resulting from the use of our service.
+            <h2>3. Limitation of Liability</h2>
+            <p>
+              ConvertAny.site and its owners/operators are not responsible for any data loss, file corruption, or damage resulting from the use of our tools. Use of the site is at your own risk. We recommend keeping backups of important files.
             </p>
-          </section>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">File Size & Format Limits</h2>
-            <p className="text-muted-foreground">
-              Maximum file size is 100MB per file. Some conversions may have additional limitations 
-              based on browser capabilities.
+            <h2>4. External Links and Ads</h2>
+            <p>
+              Our website may display third-party advertisements (for example, Google AdSense). We are not responsible for the content, accuracy, or security of external websites or ads.
             </p>
-          </section>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Changes to Terms</h2>
-            <p className="text-muted-foreground">
-              We reserve the right to modify these terms at any time. Continued use of the service 
-              constitutes acceptance of modified terms.
+            <h2>5. Service Availability</h2>
+            <p>
+              We strive to provide continuous access to the site but do not guarantee uninterrupted service. We reserve the right to modify, suspend, or discontinue any feature at any time without notice.
             </p>
-          </section>
-        </div>
+
+            <h2>6. Termination</h2>
+            <p>
+              We may suspend or terminate access to the site for users who violate these Terms or who engage in abusive or fraudulent activity.
+            </p>
+
+            <h2>7. Changes to Terms</h2>
+            <p>
+              We may update these Terms periodically. Continued use of the site after changes constitutes acceptance of the updated Terms.
+            </p>
+
+            <h2>8. Governing Law</h2>
+            <p>
+              These Terms are governed by the laws applicable in the operator's jurisdiction. Disputes will be resolved according to local applicable law.
+            </p>
+
+            <h2>9. Contact Information</h2>
+            <p>
+              For questions about these Terms, contact:{" "}
+              <a href="mailto:convertany.site@gmail.com">convertany.site@gmail.com</a>
+            </p>
+          </div>
+        </main>
+
+        <Footer />
       </div>
-      <Footer />
-      <CookieConsent />
-    </div>
     </>
   );
 }

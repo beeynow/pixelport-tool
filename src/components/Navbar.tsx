@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileType, Menu, X, User } from "lucide-react";
+import { FileType, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useUser();
 
   return (
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-lg border-b border-border z-50">
@@ -19,53 +17,29 @@ const Navbar = () => {
               <FileType className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              ConvertMe
+              ConvertAny
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/#features" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <Link to="/conversions" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+              Conversions
+            </Link>
+            <Link to="/features" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
               Features
             </Link>
-            <Link to="/pricing" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
-              Pricing
+            <Link to="/contact" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+              Contact
             </Link>
-            <SignedIn>
-              <Link to="/conversions" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
-                Conversions
-              </Link>
-              <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
-                Dashboard
-              </Link>
-            </SignedIn>
+            <Link to="/terms" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+              Terms
+            </Link>
           </div>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Theme Toggle */}
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
-            <SignedOut>
-              <Button variant="ghost" asChild>
-                <Link to="/auth/sign-in">Sign In</Link>
-              </Button>
-              <Button asChild className="bg-gradient-primary hover:opacity-90 transition-opacity">
-                <Link to="/auth/sign-up">Get Started</Link>
-              </Button>
-            </SignedOut>
-            <SignedIn>
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-muted-foreground">
-                  Hi, {user?.firstName || user?.username}
-                </span>
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "h-10 w-10"
-                    }
-                  }}
-                />
-              </div>
-            </SignedIn>
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,53 +55,35 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4 animate-fade-in">
             <Link
-              to="/#features"
+              to="/conversions"
+              className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Conversions
+            </Link>
+            <Link
+              to="/features"
               className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link
-              to="/pricing"
+              to="/contact"
               className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Pricing
+              Contact
             </Link>
-            <SignedIn>
-              <Link
-                to="/conversions"
-                className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Conversions
-              </Link>
-              <Link
-                to="/dashboard"
-                className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-            </SignedIn>
-            <div className="flex flex-col space-y-2 pt-4">
-              <div className="px-4">
-                <ThemeToggle />
-              </div>
-              <SignedOut>
-                <Button variant="ghost" asChild>
-                  <Link to="/auth/sign-in">Sign In</Link>
-                </Button>
-                <Button asChild className="bg-gradient-primary">
-                  <Link to="/auth/sign-up">Get Started</Link>
-                </Button>
-              </SignedOut>
-              <SignedIn>
-                <div className="flex items-center space-x-3 px-4">
-                  <User className="h-5 w-5 text-muted-foreground" />
-                  <span className="text-sm">{user?.firstName || user?.username}</span>
-                </div>
-              </SignedIn>
+            <Link
+              to="/terms"
+              className="block text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Terms
+            </Link>
+            <div className="px-4 pt-4">
+              <ThemeToggle />
             </div>
           </div>
         )}

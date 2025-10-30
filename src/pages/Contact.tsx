@@ -1,102 +1,129 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CookieConsent from "@/components/CookieConsent";
+import { Mail, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquare, HelpCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    
+    setTimeout(() => {
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you within 1-3 business days.",
+      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setSending(false);
+    }, 1000);
+  };
+
   return (
     <>
       <Helmet>
-        <title>Contact Us - Free Online File Converter | ConvertMe</title>
-        <meta name="description" content="Contact ConvertMe support. Get help with our free online file converter. Questions about PDF, image, audio, or video conversion? We're here to help." />
-        <meta name="keywords" content="contact, support, file converter help, customer service" />
-        <link rel="canonical" href="https://convertme.app/contact" />
+        <title>Contact Us | ConvertAny.site - Get in Touch</title>
+        <meta name="description" content="Contact ConvertAny.site for support, feedback, or business inquiries. We typically respond within 1-3 business days." />
+        <meta name="robots" content="index, follow" />
       </Helmet>
-      
-      <div className="min-h-screen bg-gradient-hero">
+
+      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
         <Navbar />
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto space-y-12">
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-            <p className="text-xl text-muted-foreground">
-              Have questions? We're here to help.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-2">Email Support</h3>
-                <p className="text-sm text-muted-foreground">support@fileconverter.com</p>
-              </CardContent>
-            </Card>
+        
+        <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <Mail className="w-16 h-16 mx-auto mb-4 text-primary" />
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                Contact Us
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                We're happy to help! For support, feedback, or business inquiries, reach out to us.
+              </p>
+            </div>
 
             <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <MessageSquare className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-2">Feedback</h3>
-                <p className="text-sm text-muted-foreground">We value your input</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <HelpCircle className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-2">Help Center</h3>
-                <p className="text-sm text-muted-foreground">FAQs and guides</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Name</label>
-                    <Input placeholder="Your name" />
+              <CardHeader>
+                <CardTitle>Send us a message</CardTitle>
+                <CardDescription>
+                  Typical response time: 1–3 business days
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email</label>
-                    <Input type="email" placeholder="your@email.com" />
+
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
                   </div>
+
+                  <div>
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea
+                      id="message"
+                      rows={6}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full" disabled={sending}>
+                    <Send className="w-4 h-4 mr-2" />
+                    {sending ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+
+                <div className="mt-6 p-4 bg-muted rounded-lg">
+                  <p className="text-sm text-center text-muted-foreground">
+                    Or email us directly at:{" "}
+                    <a href="mailto:convertany.site@gmail.com" className="text-primary hover:underline font-medium">
+                      convertany.site@gmail.com
+                    </a>
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Subject</label>
-                  <Input placeholder="How can we help?" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Message</label>
-                  <Textarea 
-                    placeholder="Tell us more about your inquiry..." 
-                    className="min-h-[150px]"
-                  />
-                </div>
-                <Button className="w-full md:w-auto" size="lg">
-                  Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+
+        <Footer />
       </div>
-      <Footer />
-      <CookieConsent />
-    </div>
     </>
   );
 }

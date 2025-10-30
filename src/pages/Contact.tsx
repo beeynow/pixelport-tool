@@ -4,21 +4,32 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Mail, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [sending, setSending] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    
+
     setTimeout(() => {
       toast({
         title: "Message sent!",
@@ -33,13 +44,16 @@ export default function Contact() {
     <>
       <Helmet>
         <title>Contact Us | ConvertAny.site - Get in Touch</title>
-        <meta name="description" content="Contact ConvertAny.site for support, feedback, or business inquiries. We typically respond within 1-3 business days." />
+        <meta
+          name="description"
+          content="Contact ConvertAny.site for support, feedback, or business inquiries. We typically respond within 1-3 business days."
+        />
         <meta name="robots" content="index, follow" />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
         <Navbar />
-        
+
         <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
@@ -48,7 +62,8 @@ export default function Contact() {
                 Contact Us
               </h1>
               <p className="text-lg text-muted-foreground">
-                We're happy to help! For support, feedback, or business inquiries, reach out to us.
+                We're happy to help! For support, feedback, or business
+                inquiries, reach out to us.
               </p>
             </div>
 
@@ -66,7 +81,9 @@ export default function Contact() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -77,7 +94,9 @@ export default function Contact() {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -87,7 +106,9 @@ export default function Contact() {
                     <Input
                       id="subject"
                       value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, subject: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -98,7 +119,9 @@ export default function Contact() {
                       id="message"
                       rows={6}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -112,7 +135,10 @@ export default function Contact() {
                 <div className="mt-6 p-4 bg-muted rounded-lg">
                   <p className="text-sm text-center text-muted-foreground">
                     Or email us directly at:{" "}
-                    <a href="mailto:convertany.site@gmail.com" className="text-primary hover:underline font-medium">
+                    <a
+                      href="mailto:convertany.site@gmail.com"
+                      className="text-primary hover:underline font-medium"
+                    >
                       convertany.site@gmail.com
                     </a>
                   </p>

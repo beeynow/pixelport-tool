@@ -1,7 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { FileText, Image as ImageIcon, Film, Music, Package } from "lucide-react";
+import {
+  FileText,
+  Image as ImageIcon,
+  Film,
+  Music,
+  Package,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Features() {
@@ -10,61 +16,110 @@ export default function Features() {
       category: "Image Conversion",
       icon: ImageIcon,
       tools: [
-        "JPG to PNG", "PNG to JPG", "WebP Converter", "Image to PDF",
-        "Compress Image", "Resize Image", "Grayscale Conversion", "Image to SVG",
-        "Crop Image", "Rotate/Flip Image", "Bulk Image Conversion"
-      ]
+        "JPG to PNG",
+        "PNG to JPG",
+        "WebP Converter",
+        "Image to PDF",
+        "Compress Image",
+        "Resize Image",
+        "Grayscale Conversion",
+        "Image to SVG",
+        "Crop Image",
+        "Rotate/Flip Image",
+        "Bulk Image Conversion",
+      ],
     },
     {
       category: "Document Conversion",
       icon: FileText,
       tools: [
-        "PDF to Word", "Word to PDF", "PDF to Excel", "Excel to PDF",
-        "PPT to PDF", "PDF to PPT", "Merge PDFs", "Split PDF",
-        "Compress PDF", "PDF to Text", "Text to PDF", "PDF OCR", "Reorder PDF Pages"
-      ]
+        "PDF to Word",
+        "Word to PDF",
+        "PDF to Excel",
+        "Excel to PDF",
+        "PPT to PDF",
+        "PDF to PPT",
+        "Merge PDFs",
+        "Split PDF",
+        "Compress PDF",
+        "PDF to Text",
+        "Text to PDF",
+        "PDF OCR",
+        "Reorder PDF Pages",
+      ],
     },
     {
       category: "Audio Conversion",
       icon: Music,
       tools: [
-        "MP3 to WAV", "WAV to MP3", "Convert to AAC", "Convert to OGG",
-        "Convert to FLAC", "Trim Audio", "Merge Audio", "Extract Audio from Video",
-        "Change Audio Bitrate", "Change Audio Speed", "Create Ringtone",
-        "Add Intro/Outro", "Cut Audio Segments"
-      ]
+        "MP3 to WAV",
+        "WAV to MP3",
+        "Convert to AAC",
+        "Convert to OGG",
+        "Convert to FLAC",
+        "Trim Audio",
+        "Merge Audio",
+        "Extract Audio from Video",
+        "Change Audio Bitrate",
+        "Change Audio Speed",
+        "Create Ringtone",
+        "Add Intro/Outro",
+        "Cut Audio Segments",
+      ],
     },
     {
       category: "Video Conversion",
       icon: Film,
       tools: [
-        "MP4 to AVI", "AVI to MP4", "MOV to MP4", "Video to GIF",
-        "Compress Video", "Trim Video", "Merge Videos", "Extract Thumbnail",
-        "Remove Audio from Video", "Change Video Resolution", "Rotate Video", "Add Video Watermark"
-      ]
+        "MP4 to AVI",
+        "AVI to MP4",
+        "MOV to MP4",
+        "Video to GIF",
+        "Compress Video",
+        "Trim Video",
+        "Merge Videos",
+        "Extract Thumbnail",
+        "Remove Audio from Video",
+        "Change Video Resolution",
+        "Rotate Video",
+        "Add Video Watermark",
+      ],
     },
     {
       category: "Other Tools",
       icon: Package,
       tools: [
-        "Excel to CSV", "CSV to Excel", "JSON to CSV", "Markdown to HTML",
-        "HTML to PDF", "Image to Base64", "Generate QR Code", "Create ZIP Archive",
-        "Extract ZIP", "Compress ZIP", "Batch File Renamer", "Folder to ZIP", "URL to PDF"
-      ]
-    }
+        "Excel to CSV",
+        "CSV to Excel",
+        "JSON to CSV",
+        "Markdown to HTML",
+        "HTML to PDF",
+        "Image to Base64",
+        "Generate QR Code",
+        "Create ZIP Archive",
+        "Extract ZIP",
+        "Compress ZIP",
+        "Batch File Renamer",
+        "Folder to ZIP",
+        "URL to PDF",
+      ],
+    },
   ];
 
   return (
     <>
       <Helmet>
         <title>All Features | 62+ Free Conversion Tools | ConvertAny</title>
-        <meta name="description" content="Explore all 62+ free conversion tools on ConvertAny. Convert documents, images, audio, video, and more. No sign-up required." />
+        <meta
+          name="description"
+          content="Explore all 62+ free conversion tools on ConvertAny. Convert documents, images, audio, video, and more. No sign-up required."
+        />
         <meta name="robots" content="index, follow" />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
         <Navbar />
-        
+
         <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -85,11 +140,16 @@ export default function Features() {
                         <feature.icon className="w-6 h-6 text-primary" />
                       </div>
                       <h2 className="text-2xl font-bold">{feature.category}</h2>
-                      <span className="text-sm text-muted-foreground">({feature.tools.length} tools)</span>
+                      <span className="text-sm text-muted-foreground">
+                        ({feature.tools.length} tools)
+                      </span>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                       {feature.tools.map((tool) => (
-                        <div key={tool} className="p-3 rounded-lg border border-border hover:border-primary transition-colors">
+                        <div
+                          key={tool}
+                          className="p-3 rounded-lg border border-border hover:border-primary transition-colors"
+                        >
                           <p className="text-sm font-medium">{tool}</p>
                         </div>
                       ))}

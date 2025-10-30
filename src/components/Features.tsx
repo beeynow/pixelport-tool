@@ -5,32 +5,38 @@ const features = [
   {
     icon: Zap,
     title: "Lightning Fast Conversion",
-    description: "Convert PDF to Word, compress images, and process files in seconds. Our free online file converter delivers instant results.",
+    description:
+      "Convert PDF to Word, compress images, and process files in seconds. Our free online file converter delivers instant results.",
   },
   {
     icon: Shield,
     title: "100% Secure & Private",
-    description: "Your files are encrypted during conversion and automatically deleted after 24 hours. Your privacy is guaranteed.",
+    description:
+      "Your files are encrypted during conversion and automatically deleted after 24 hours. Your privacy is guaranteed.",
   },
   {
     icon: FileType,
     title: "OCR & Format Support",
-    description: "OCR PDF to text, convert scanned documents, JPG to PNG, Word to PDF, EPUB to PDF, and 50+ more formats supported.",
+    description:
+      "OCR PDF to text, convert scanned documents, JPG to PNG, Word to PDF, EPUB to PDF, and 50+ more formats supported.",
   },
   {
     icon: Download,
     title: "Instant Download",
-    description: "Download converted files immediately. No email required, no sign-up, just instant access to your files.",
+    description:
+      "Download converted files immediately. No email required, no sign-up, just instant access to your files.",
   },
   {
     icon: Sparkles,
     title: "Image Compression Tool",
-    description: "Free online image compression tool reduces file size while maintaining quality. Perfect for web optimization.",
+    description:
+      "Free online image compression tool reduces file size while maintaining quality. Perfect for web optimization.",
   },
   {
     icon: Clock,
     title: "Batch File Converter",
-    description: "Convert multiple files at once with our batch converter. Upload up to 20 files and convert them simultaneously.",
+    description:
+      "Convert multiple files at once with our batch converter. Upload up to 20 files and convert them simultaneously.",
   },
 ];
 
@@ -46,8 +52,8 @@ const Features = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            PDF editor online free, image converter, video to MP3 converter, and more. 
-            Everything you need for file conversion in one place.
+            PDF editor online free, image converter, video to MP3 converter, and
+            more. Everything you need for file conversion in one place.
           </p>
         </div>
 

@@ -26,12 +26,18 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/conversions" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/conversions"
+                  className="hover:text-foreground transition-colors"
+                >
                   Conversions
                 </Link>
               </li>
               <li>
-                <Link to="/features" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/features"
+                  className="hover:text-foreground transition-colors"
+                >
                   Features
                 </Link>
               </li>
@@ -43,12 +49,18 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/about" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/about"
+                  className="hover:text-foreground transition-colors"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/contact"
+                  className="hover:text-foreground transition-colors"
+                >
                   Contact
                 </Link>
               </li>
@@ -60,12 +72,18 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/privacy" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/privacy"
+                  className="hover:text-foreground transition-colors"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-foreground transition-colors">
+                <Link
+                  to="/terms"
+                  className="hover:text-foreground transition-colors"
+                >
                   Terms & Conditions
                 </Link>
               </li>
@@ -74,7 +92,9 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} ConvertAny. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} ConvertAny. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

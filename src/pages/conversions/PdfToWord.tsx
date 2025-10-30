@@ -12,7 +12,7 @@ export default function PdfToWord() {
       outputExtension="docx"
       conversionHandler={async (files) => {
         const blob = await convertPdfToWord(files[0]);
-        downloadFile(blob, 'converted.docx');
+        downloadFile(blob, "converted.docx");
       }}
       relatedTools={[
         { name: "Word to PDF", path: "/word-to-pdf" },

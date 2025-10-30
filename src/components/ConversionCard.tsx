@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LucideIcon } from "lucide-react";
@@ -34,7 +40,7 @@ export const ConversionCard = ({
 
     try {
       setIsConverting(true);
-      
+
       const tracked = await trackConversion();
       if (!tracked) {
         setIsConverting(false);
@@ -42,7 +48,7 @@ export const ConversionCard = ({
       }
 
       await onConvert(files);
-      
+
       toast({
         title: "Success!",
         description: "File conversion completed successfully",
@@ -51,7 +57,10 @@ export const ConversionCard = ({
       console.error("Conversion error:", error);
       toast({
         title: "Conversion failed",
-        description: error instanceof Error ? error.message : "An error occurred during conversion",
+        description:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during conversion",
         variant: "destructive",
       });
     } finally {

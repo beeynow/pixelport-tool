@@ -23,16 +23,28 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/conversions" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <Link
+              to="/conversions"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
               Conversions
             </Link>
-            <Link to="/features" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <Link
+              to="/features"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
               Features
             </Link>
-            <Link to="/contact" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <Link
+              to="/contact"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
               Contact
             </Link>
-            <Link to="/terms" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+            <Link
+              to="/terms"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+            >
               Terms
             </Link>
           </div>
@@ -47,7 +59,11 @@ const Navbar = () => {
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
 

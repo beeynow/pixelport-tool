@@ -2,12 +2,26 @@ import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import CookieConsent from "@/components/CookieConsent";
-import { 
-  Upload, FileText, Image as ImageIcon, Film, Music, CheckCircle2, Loader2, 
-  FileCode, Package, Sparkles
+import {
+  Upload,
+  FileText,
+  Image as ImageIcon,
+  Film,
+  Music,
+  CheckCircle2,
+  Loader2,
+  FileCode,
+  Package,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -66,7 +80,7 @@ export default function Conversions() {
       icon: ImageIcon,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
-      count: 11
+      count: 11,
     },
     {
       id: "document",
@@ -75,7 +89,7 @@ export default function Conversions() {
       icon: FileText,
       color: "text-green-500",
       bgColor: "bg-green-500/10",
-      count: 13
+      count: 13,
     },
     {
       id: "audio",
@@ -84,7 +98,7 @@ export default function Conversions() {
       icon: Music,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
-      count: 13
+      count: 13,
     },
     {
       id: "video",
@@ -93,7 +107,7 @@ export default function Conversions() {
       icon: Film,
       color: "text-red-500",
       bgColor: "bg-red-500/10",
-      count: 12
+      count: 12,
     },
     {
       id: "other",
@@ -102,8 +116,8 @@ export default function Conversions() {
       icon: Package,
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
-      count: 13
-    }
+      count: 13,
+    },
   ];
 
   const conversionTools: ConversionTool[] = [
@@ -115,9 +129,9 @@ export default function Conversions() {
       acceptedFiles: "image/jpeg",
       categoryId: "image",
       handler: async (files) => {
-        const blob = await convertImageFormat(files[0], 'png');
-        downloadFile(blob, 'converted.png');
-      }
+        const blob = await convertImageFormat(files[0], "png");
+        downloadFile(blob, "converted.png");
+      },
     },
     {
       id: "png-to-jpg",
@@ -126,9 +140,9 @@ export default function Conversions() {
       acceptedFiles: "image/png",
       categoryId: "image",
       handler: async (files) => {
-        const blob = await convertImageFormat(files[0], 'jpeg');
-        downloadFile(blob, 'converted.jpg');
-      }
+        const blob = await convertImageFormat(files[0], "jpeg");
+        downloadFile(blob, "converted.jpg");
+      },
     },
     {
       id: "webp-converter",
@@ -137,9 +151,9 @@ export default function Conversions() {
       acceptedFiles: "image/*",
       categoryId: "image",
       handler: async (files) => {
-        const blob = await convertImageFormat(files[0], 'webp');
-        downloadFile(blob, 'converted.webp');
-      }
+        const blob = await convertImageFormat(files[0], "webp");
+        downloadFile(blob, "converted.webp");
+      },
     },
     {
       id: "image-to-pdf",
@@ -150,8 +164,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await convertImagesToPdf(files);
-        downloadFile(blob, 'images.pdf');
-      }
+        downloadFile(blob, "images.pdf");
+      },
     },
     {
       id: "compress-image",
@@ -161,8 +175,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await compressImage(files[0], 0.5);
-        downloadFile(blob, 'compressed.jpg');
-      }
+        downloadFile(blob, "compressed.jpg");
+      },
     },
     {
       id: "image-resize",
@@ -172,8 +186,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await compressImage(files[0], 0.9);
-        downloadFile(blob, 'resized.jpg');
-      }
+        downloadFile(blob, "resized.jpg");
+      },
     },
     {
       id: "grayscale",
@@ -183,8 +197,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await compressImage(files[0], 0.9);
-        downloadFile(blob, 'grayscale.jpg');
-      }
+        downloadFile(blob, "grayscale.jpg");
+      },
     },
     {
       id: "image-to-svg",
@@ -194,8 +208,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await convertImageToSvg(files[0]);
-        downloadFile(blob, 'converted.svg');
-      }
+        downloadFile(blob, "converted.svg");
+      },
     },
     {
       id: "crop-image",
@@ -205,8 +219,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await compressImage(files[0], 1);
-        downloadFile(blob, 'cropped.jpg');
-      }
+        downloadFile(blob, "cropped.jpg");
+      },
     },
     {
       id: "rotate-image",
@@ -216,8 +230,8 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         const blob = await compressImage(files[0], 1);
-        downloadFile(blob, 'rotated.jpg');
-      }
+        downloadFile(blob, "rotated.jpg");
+      },
     },
     {
       id: "bulk-image",
@@ -228,10 +242,10 @@ export default function Conversions() {
       categoryId: "image",
       handler: async (files) => {
         for (let i = 0; i < files.length; i++) {
-          const blob = await convertImageFormat(files[i], 'png');
+          const blob = await convertImageFormat(files[i], "png");
           downloadFile(blob, `converted-${i + 1}.png`);
         }
-      }
+      },
     },
 
     // Document Tools (13)
@@ -243,8 +257,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToWord(files[0]);
-        downloadFile(blob, 'converted.docx');
-      }
+        downloadFile(blob, "converted.docx");
+      },
     },
     {
       id: "word-to-pdf",
@@ -254,8 +268,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertWordToPdf(files[0]);
-        downloadFile(blob, 'converted.pdf');
-      }
+        downloadFile(blob, "converted.pdf");
+      },
     },
     {
       id: "pdf-to-excel",
@@ -265,8 +279,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToExcel(files[0]);
-        downloadFile(blob, 'converted.xlsx');
-      }
+        downloadFile(blob, "converted.xlsx");
+      },
     },
     {
       id: "excel-to-pdf",
@@ -276,8 +290,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertCsvToExcel(files[0]);
-        downloadFile(blob, 'converted.pdf');
-      }
+        downloadFile(blob, "converted.pdf");
+      },
     },
     {
       id: "ppt-to-pdf",
@@ -287,8 +301,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToPowerPoint(files[0]);
-        downloadFile(blob, 'converted.pdf');
-      }
+        downloadFile(blob, "converted.pdf");
+      },
     },
     {
       id: "pdf-to-ppt",
@@ -298,8 +312,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToPowerPoint(files[0]);
-        downloadFile(blob, 'converted.pptx');
-      }
+        downloadFile(blob, "converted.pptx");
+      },
     },
     {
       id: "merge-pdf",
@@ -310,8 +324,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await mergePdfs(files);
-        downloadFile(blob, 'merged.pdf');
-      }
+        downloadFile(blob, "merged.pdf");
+      },
     },
     {
       id: "split-pdf",
@@ -324,7 +338,7 @@ export default function Conversions() {
         blobs.forEach((blob, index) => {
           downloadFile(blob, `page-${index + 1}.pdf`);
         });
-      }
+      },
     },
     {
       id: "compress-pdf",
@@ -334,8 +348,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToWord(files[0]);
-        downloadFile(blob, 'compressed.pdf');
-      }
+        downloadFile(blob, "compressed.pdf");
+      },
     },
     {
       id: "pdf-to-text",
@@ -345,8 +359,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToWord(files[0]);
-        downloadFile(blob, 'extracted.txt');
-      }
+        downloadFile(blob, "extracted.txt");
+      },
     },
     {
       id: "text-to-pdf",
@@ -356,8 +370,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertTextToPdf(files[0]);
-        downloadFile(blob, 'converted.pdf');
-      }
+        downloadFile(blob, "converted.pdf");
+      },
     },
     {
       id: "pdf-ocr",
@@ -367,8 +381,8 @@ export default function Conversions() {
       categoryId: "document",
       handler: async (files) => {
         const blob = await convertPdfToWord(files[0]);
-        downloadFile(blob, 'ocr-result.docx');
-      }
+        downloadFile(blob, "ocr-result.docx");
+      },
     },
     {
       id: "reorder-pdf",
@@ -379,8 +393,8 @@ export default function Conversions() {
       handler: async (files) => {
         const blobs = await splitPdf(files[0]);
         const blob = await mergePdfs([files[0]]);
-        downloadFile(blob, 'reordered.pdf');
-      }
+        downloadFile(blob, "reordered.pdf");
+      },
     },
 
     // Audio Tools (13)
@@ -391,8 +405,8 @@ export default function Conversions() {
       acceptedFiles: "audio/mpeg",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.wav');
-      }
+        downloadFile(files[0], "converted.wav");
+      },
     },
     {
       id: "wav-to-mp3",
@@ -401,8 +415,8 @@ export default function Conversions() {
       acceptedFiles: "audio/wav",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.mp3');
-      }
+        downloadFile(files[0], "converted.mp3");
+      },
     },
     {
       id: "audio-to-aac",
@@ -411,8 +425,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.aac');
-      }
+        downloadFile(files[0], "converted.aac");
+      },
     },
     {
       id: "audio-to-ogg",
@@ -421,8 +435,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.ogg');
-      }
+        downloadFile(files[0], "converted.ogg");
+      },
     },
     {
       id: "audio-to-flac",
@@ -431,8 +445,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.flac');
-      }
+        downloadFile(files[0], "converted.flac");
+      },
     },
     {
       id: "trim-audio",
@@ -441,8 +455,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'trimmed.mp3');
-      }
+        downloadFile(files[0], "trimmed.mp3");
+      },
     },
     {
       id: "merge-audio",
@@ -452,8 +466,8 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'merged.mp3');
-      }
+        downloadFile(files[0], "merged.mp3");
+      },
     },
     {
       id: "extract-audio",
@@ -463,8 +477,8 @@ export default function Conversions() {
       categoryId: "audio",
       handler: async (files) => {
         const blob = await convertVideoToAudio(files[0]);
-        downloadFile(blob, 'audio.mp3');
-      }
+        downloadFile(blob, "audio.mp3");
+      },
     },
     {
       id: "change-bitrate",
@@ -473,8 +487,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'adjusted.mp3');
-      }
+        downloadFile(files[0], "adjusted.mp3");
+      },
     },
     {
       id: "audio-speed",
@@ -483,8 +497,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'speed-adjusted.mp3');
-      }
+        downloadFile(files[0], "speed-adjusted.mp3");
+      },
     },
     {
       id: "ringtone",
@@ -493,8 +507,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'ringtone.m4r');
-      }
+        downloadFile(files[0], "ringtone.m4r");
+      },
     },
     {
       id: "add-intro",
@@ -504,8 +518,8 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'with-intro.mp3');
-      }
+        downloadFile(files[0], "with-intro.mp3");
+      },
     },
     {
       id: "cut-segments",
@@ -514,8 +528,8 @@ export default function Conversions() {
       acceptedFiles: "audio/*",
       categoryId: "audio",
       handler: async (files) => {
-        downloadFile(files[0], 'cut.mp3');
-      }
+        downloadFile(files[0], "cut.mp3");
+      },
     },
 
     // Video Tools (12)
@@ -526,8 +540,8 @@ export default function Conversions() {
       acceptedFiles: "video/mp4",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.avi');
-      }
+        downloadFile(files[0], "converted.avi");
+      },
     },
     {
       id: "avi-to-mp4",
@@ -536,8 +550,8 @@ export default function Conversions() {
       acceptedFiles: "video/avi,video/x-msvideo",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.mp4');
-      }
+        downloadFile(files[0], "converted.mp4");
+      },
     },
     {
       id: "mov-to-mp4",
@@ -546,8 +560,8 @@ export default function Conversions() {
       acceptedFiles: "video/quicktime",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.mp4');
-      }
+        downloadFile(files[0], "converted.mp4");
+      },
     },
     {
       id: "video-to-gif",
@@ -556,8 +570,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.gif');
-      }
+        downloadFile(files[0], "converted.gif");
+      },
     },
     {
       id: "compress-video",
@@ -566,8 +580,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'compressed.mp4');
-      }
+        downloadFile(files[0], "compressed.mp4");
+      },
     },
     {
       id: "trim-video",
@@ -576,8 +590,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'trimmed.mp4');
-      }
+        downloadFile(files[0], "trimmed.mp4");
+      },
     },
     {
       id: "merge-video",
@@ -587,8 +601,8 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'merged.mp4');
-      }
+        downloadFile(files[0], "merged.mp4");
+      },
     },
     {
       id: "extract-thumbnail",
@@ -597,8 +611,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'thumbnail.jpg');
-      }
+        downloadFile(files[0], "thumbnail.jpg");
+      },
     },
     {
       id: "remove-audio-video",
@@ -607,8 +621,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'no-audio.mp4');
-      }
+        downloadFile(files[0], "no-audio.mp4");
+      },
     },
     {
       id: "change-resolution",
@@ -617,8 +631,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'resized.mp4');
-      }
+        downloadFile(files[0], "resized.mp4");
+      },
     },
     {
       id: "rotate-video",
@@ -627,8 +641,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'rotated.mp4');
-      }
+        downloadFile(files[0], "rotated.mp4");
+      },
     },
     {
       id: "video-watermark",
@@ -637,8 +651,8 @@ export default function Conversions() {
       acceptedFiles: "video/*",
       categoryId: "video",
       handler: async (files) => {
-        downloadFile(files[0], 'watermarked.mp4');
-      }
+        downloadFile(files[0], "watermarked.mp4");
+      },
     },
 
     // Other Tools (13)
@@ -650,8 +664,8 @@ export default function Conversions() {
       categoryId: "other",
       handler: async (files) => {
         const blob = await convertExcelToCsv(files[0]);
-        downloadFile(blob, 'converted.csv');
-      }
+        downloadFile(blob, "converted.csv");
+      },
     },
     {
       id: "csv-to-excel",
@@ -661,8 +675,8 @@ export default function Conversions() {
       categoryId: "other",
       handler: async (files) => {
         const blob = await convertCsvToExcel(files[0]);
-        downloadFile(blob, 'converted.xlsx');
-      }
+        downloadFile(blob, "converted.xlsx");
+      },
     },
     {
       id: "json-to-csv",
@@ -671,8 +685,8 @@ export default function Conversions() {
       acceptedFiles: ".json",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.csv');
-      }
+        downloadFile(files[0], "converted.csv");
+      },
     },
     {
       id: "markdown-to-html",
@@ -682,8 +696,8 @@ export default function Conversions() {
       categoryId: "other",
       handler: async (files) => {
         const blob = await convertMarkdownToHtml(files[0]);
-        downloadFile(blob, 'converted.html');
-      }
+        downloadFile(blob, "converted.html");
+      },
     },
     {
       id: "html-to-pdf",
@@ -692,8 +706,8 @@ export default function Conversions() {
       acceptedFiles: ".html,.htm",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'converted.pdf');
-      }
+        downloadFile(files[0], "converted.pdf");
+      },
     },
     {
       id: "image-to-base64",
@@ -705,11 +719,11 @@ export default function Conversions() {
         const reader = new FileReader();
         reader.onload = () => {
           const base64 = reader.result;
-          const blob = new Blob([base64 as string], { type: 'text/plain' });
-          downloadFile(blob, 'base64.txt');
+          const blob = new Blob([base64 as string], { type: "text/plain" });
+          downloadFile(blob, "base64.txt");
         };
         reader.readAsDataURL(files[0]);
-      }
+      },
     },
     {
       id: "qr-generate",
@@ -718,8 +732,8 @@ export default function Conversions() {
       acceptedFiles: ".txt",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'qrcode.png');
-      }
+        downloadFile(files[0], "qrcode.png");
+      },
     },
     {
       id: "zip-files",
@@ -729,8 +743,8 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'archive.zip');
-      }
+        downloadFile(files[0], "archive.zip");
+      },
     },
     {
       id: "unzip",
@@ -739,8 +753,8 @@ export default function Conversions() {
       acceptedFiles: ".zip",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'extracted.zip');
-      }
+        downloadFile(files[0], "extracted.zip");
+      },
     },
     {
       id: "compress-zip",
@@ -749,8 +763,8 @@ export default function Conversions() {
       acceptedFiles: ".zip",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'compressed.zip');
-      }
+        downloadFile(files[0], "compressed.zip");
+      },
     },
     {
       id: "batch-rename",
@@ -760,8 +774,10 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "other",
       handler: async (files) => {
-        files.forEach((file, i) => downloadFile(file, `renamed-${i + 1}.${file.name.split('.').pop()}`));
-      }
+        files.forEach((file, i) =>
+          downloadFile(file, `renamed-${i + 1}.${file.name.split(".").pop()}`)
+        );
+      },
     },
     {
       id: "folder-to-zip",
@@ -771,8 +787,8 @@ export default function Conversions() {
       multipleFiles: true,
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'folder.zip');
-      }
+        downloadFile(files[0], "folder.zip");
+      },
     },
     {
       id: "url-to-pdf",
@@ -781,239 +797,289 @@ export default function Conversions() {
       acceptedFiles: ".txt",
       categoryId: "other",
       handler: async (files) => {
-        downloadFile(files[0], 'webpage.pdf');
-      }
-    }
+        downloadFile(files[0], "webpage.pdf");
+      },
+    },
   ];
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>, tool: ConversionTool) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      setSelectedFiles(files);
-      setCompleted(false);
-      setCurrentTool(tool.name);
-      handleConvert(tool, files);
-    }
-  }, []);
-
-  const handleConvert = useCallback(async (tool: ConversionTool, files: File[]) => {
-    setConverting(true);
-    setProgress(0);
-
-    try {
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          const newProgress = prev + 5;
-          return Math.min(newProgress, 95);
-        });
-      }, 150);
-
-      await tool.handler(files);
-
-      clearInterval(progressInterval);
-      setProgress(100);
-      setCompleted(true);
-
-      toast({
-        title: "✓ Conversion complete!",
-        description: "Your file has been optimized and downloaded successfully.",
-      });
-
-      setTimeout(() => {
-        setSelectedFiles([]);
-        setProgress(0);
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, tool: ConversionTool) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length > 0) {
+        setSelectedFiles(files);
         setCompleted(false);
-        setCurrentTool("");
-      }, 3000);
-    } catch (error) {
-      toast({
-        title: "Conversion failed",
-        description: "There was an error converting your file. Please try again.",
-        variant: "destructive"
-      });
-      setProgress(0);
-      setCurrentTool("");
-    } finally {
-      setConverting(false);
-    }
-  }, [toast]);
+        setCurrentTool(tool.name);
+        handleConvert(tool, files);
+      }
+    },
+    []
+  );
 
-  const getToolsByCategory = (categoryId: string) => 
-    conversionTools.filter(t => t.categoryId === categoryId);
+  const handleConvert = useCallback(
+    async (tool: ConversionTool, files: File[]) => {
+      setConverting(true);
+      setProgress(0);
+
+      try {
+        const progressInterval = setInterval(() => {
+          setProgress((prev) => {
+            const newProgress = prev + 5;
+            return Math.min(newProgress, 95);
+          });
+        }, 150);
+
+        await tool.handler(files);
+
+        clearInterval(progressInterval);
+        setProgress(100);
+        setCompleted(true);
+
+        toast({
+          title: "✓ Conversion complete!",
+          description:
+            "Your file has been optimized and downloaded successfully.",
+        });
+
+        setTimeout(() => {
+          setSelectedFiles([]);
+          setProgress(0);
+          setCompleted(false);
+          setCurrentTool("");
+        }, 3000);
+      } catch (error) {
+        toast({
+          title: "Conversion failed",
+          description:
+            "There was an error converting your file. Please try again.",
+          variant: "destructive",
+        });
+        setProgress(0);
+        setCurrentTool("");
+      } finally {
+        setConverting(false);
+      }
+    },
+    [toast]
+  );
+
+  const getToolsByCategory = (categoryId: string) =>
+    conversionTools.filter((t) => t.categoryId === categoryId);
 
   return (
     <>
       <Helmet>
-        <title>Free Online File Converter - 62+ Tools | PDF, Image, Audio, Video | ConvertMe</title>
+        <title>
+          Free Online File Converter - 62+ Tools | PDF, Image, Audio, Video |
+          ConvertMe
+        </title>
         <meta
           name="description"
           content="Free online file converter with 62+ tools. Convert PDF to Word, JPG to PNG, MP4 to MP3, and more. No signup required. Fast, secure, 100% free forever."
         />
-        <meta name="keywords" content="free online converter, PDF to Word, JPG to PNG, image converter, video converter, audio converter, file conversion tools, convert files online free" />
+        <meta
+          name="keywords"
+          content="free online converter, PDF to Word, JPG to PNG, image converter, video converter, audio converter, file conversion tools, convert files online free"
+        />
         <link rel="canonical" href="https://convertme.app/conversions" />
-        <meta property="og:title" content="Free Online File Converter - 62+ Tools" />
-        <meta property="og:description" content="Convert files online free with our 62+ conversion tools. No signup required." />
+        <meta
+          property="og:title"
+          content="Free Online File Converter - 62+ Tools"
+        />
+        <meta
+          property="og:description"
+          content="Convert files online free with our 62+ conversion tools. No signup required."
+        />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
         <Navbar />
-      
-        <div className="container mx-auto px-4 pt-24 pb-12">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">62 Powerful Tools</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-200 animate-gradient">
-            Free Online File Converter
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Convert images, documents, audio, video and more with lightning speed
-          </p>
-        </div>
 
-        {/* Conversion Progress */}
-        {converting && (
-          <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
-            <Card className="border-2 border-primary/30 bg-gradient-to-br from-card/95 to-primary/5 backdrop-blur shadow-glow">
-              <CardContent className="p-8">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="relative">
-                      <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                      <div className="absolute inset-0 blur-xl bg-primary/30 animate-pulse" />
+        <div className="container mx-auto px-4 pt-24 pb-12">
+          {/* Header */}
+          <div className="text-center mb-12 animate-fade-in space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">
+                62 Powerful Tools
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-200 animate-gradient">
+              Free Online File Converter
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Convert images, documents, audio, video and more with lightning
+              speed
+            </p>
+          </div>
+
+          {/* Conversion Progress */}
+          {converting && (
+            <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
+              <Card className="border-2 border-primary/30 bg-gradient-to-br from-card/95 to-primary/5 backdrop-blur shadow-glow">
+                <CardContent className="p-8">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="relative">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        <div className="absolute inset-0 blur-xl bg-primary/30 animate-pulse" />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xl font-bold">
+                          Converting {currentTool}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Optimizing file size...
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <p className="text-xl font-bold">Converting {currentTool}</p>
-                      <p className="text-sm text-muted-foreground">Optimizing file size...</p>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm font-medium">
+                        <span>
+                          {progress < 100 ? "Processing..." : "Complete!"}
+                        </span>
+                        <span className="text-primary text-lg font-bold">
+                          {progress}%
+                        </span>
+                      </div>
+                      <Progress value={progress} className="h-4 bg-muted/50" />
+                    </div>
+
+                    <p className="text-center text-xs text-muted-foreground">
+                      File will be auto-deleted after download
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Success Message */}
+          {completed && (
+            <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
+              <Card className="border-2 border-primary bg-gradient-to-br from-primary/20 via-primary/10 to-transparent backdrop-blur shadow-glow">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-center gap-4 text-primary">
+                    <CheckCircle2 className="w-12 h-12 animate-pulse" />
+                    <div>
+                      <p className="text-2xl font-bold">Success!</p>
+                      <p className="text-sm text-foreground/80">
+                        File downloaded & deleted from system
+                      </p>
                     </div>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm font-medium">
-                      <span>{progress < 100 ? 'Processing...' : 'Complete!'}</span>
-                      <span className="text-primary text-lg font-bold">{progress}%</span>
-                    </div>
-                    <Progress value={progress} className="h-4 bg-muted/50" />
-                  </div>
-                  
-                  <p className="text-center text-xs text-muted-foreground">
-                    File will be auto-deleted after download
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Tabs Navigation */}
+          <Tabs defaultValue="image" className="max-w-7xl mx-auto">
+            <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-card/50 backdrop-blur p-2 mb-8 border border-border/50 rounded-xl">
+              {categories.map((category) => (
+                <TabsTrigger
+                  key={category.id}
+                  value={category.id}
+                  className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg transition-all hover:scale-105"
+                >
+                  <category.icon className="w-4 h-4" />
+                  <span className="font-semibold">
+                    {category.name.replace(" Conversion", "")}
+                  </span>
+                  <span className="text-xs opacity-70 ml-1">
+                    ({category.count})
+                  </span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {/* Tab Contents */}
+            {categories.map((category) => (
+              <TabsContent
+                key={category.id}
+                value={category.id}
+                className="mt-0"
+              >
+                <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-card/80 to-primary/5 backdrop-blur border border-border/50">
+                  <h2 className="text-2xl font-bold mb-2">{category.name}</h2>
+                  <p className="text-muted-foreground">
+                    {category.description}
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
-        {/* Success Message */}
-        {completed && (
-          <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
-            <Card className="border-2 border-primary bg-gradient-to-br from-primary/20 via-primary/10 to-transparent backdrop-blur shadow-glow">
-              <CardContent className="p-8">
-                <div className="flex items-center justify-center gap-4 text-primary">
-                  <CheckCircle2 className="w-12 h-12 animate-pulse" />
-                  <div>
-                    <p className="text-2xl font-bold">Success!</p>
-                    <p className="text-sm text-foreground/80">File downloaded & deleted from system</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {/* Tabs Navigation */}
-        <Tabs defaultValue="image" className="max-w-7xl mx-auto">
-          <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-card/50 backdrop-blur p-2 mb-8 border border-border/50 rounded-xl">
-            {categories.map((category) => (
-              <TabsTrigger 
-                key={category.id} 
-                value={category.id}
-                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg transition-all hover:scale-105"
-              >
-                <category.icon className="w-4 h-4" />
-                <span className="font-semibold">{category.name.replace(' Conversion', '')}</span>
-                <span className="text-xs opacity-70 ml-1">({category.count})</span>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {/* Tab Contents */}
-          {categories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="mt-0">
-              <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-card/80 to-primary/5 backdrop-blur border border-border/50">
-                <h2 className="text-2xl font-bold mb-2">{category.name}</h2>
-                <p className="text-muted-foreground">{category.description}</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {getToolsByCategory(category.id).map((tool, index) => (
-                  <Card 
-                    key={tool.id}
-                    className="group hover:shadow-glow hover:border-primary/50 transition-all hover:scale-105 animate-fade-in bg-card/50 backdrop-blur"
-                    style={{ animationDelay: `${index * 0.03}s` }}
-                  >
-                    <CardContent className="p-5">
-                      <div className="space-y-3">
-                        <div className="flex items-start gap-2">
-                          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                            <FileCode className="w-5 h-5 text-primary" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {getToolsByCategory(category.id).map((tool, index) => (
+                    <Card
+                      key={tool.id}
+                      className="group hover:shadow-glow hover:border-primary/50 transition-all hover:scale-105 animate-fade-in bg-card/50 backdrop-blur"
+                      style={{ animationDelay: `${index * 0.03}s` }}
+                    >
+                      <CardContent className="p-5">
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-2">
+                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                              <FileCode className="w-5 h-5 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
+                                {tool.name}
+                              </h3>
+                              <p className="text-xs text-muted-foreground line-clamp-2">
+                                {tool.description}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
-                              {tool.name}
-                            </h3>
-                            <p className="text-xs text-muted-foreground line-clamp-2">
-                              {tool.description}
-                            </p>
-                          </div>
+
+                          <label className="cursor-pointer block">
+                            <Button
+                              className="w-full group-hover:shadow-lg transition-all"
+                              disabled={converting}
+                              size="sm"
+                              asChild
+                            >
+                              <span>
+                                <Upload className="w-3 h-3 mr-2" />
+                                {tool.multipleFiles ? "Upload Files" : "Upload"}
+                              </span>
+                            </Button>
+                            <input
+                              type="file"
+                              className="hidden"
+                              accept={tool.acceptedFiles}
+                              multiple={tool.multipleFiles}
+                              onChange={(e) => handleFileSelect(e, tool)}
+                            />
+                          </label>
                         </div>
-                        
-                        <label className="cursor-pointer block">
-                          <Button 
-                            className="w-full group-hover:shadow-lg transition-all"
-                            disabled={converting}
-                            size="sm"
-                            asChild
-                          >
-                            <span>
-                              <Upload className="w-3 h-3 mr-2" />
-                              {tool.multipleFiles ? "Upload Files" : "Upload"}
-                            </span>
-                          </Button>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept={tool.acceptedFiles}
-                            multiple={tool.multipleFiles}
-                            onChange={(e) => handleFileSelect(e, tool)}
-                          />
-                        </label>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
 
-        {/* Privacy Notice */}
-        <div className="max-w-4xl mx-auto mt-16">
-          <Card className="bg-gradient-to-r from-muted/80 to-primary/5 backdrop-blur border-2 border-primary/20">
-            <CardContent className="p-8 text-center">
-              <p className="text-sm text-foreground/80 flex items-center justify-center gap-2 flex-wrap">
-                <span className="text-2xl">🔒</span>
-                <strong className="text-primary">100% Private & Secure:</strong> 
-                All conversions happen in your browser. 
-                <span className="font-semibold">Files are never uploaded to servers</span> and are 
-                <span className="font-semibold text-primary">permanently deleted after download.</span>
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+          {/* Privacy Notice */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <Card className="bg-gradient-to-r from-muted/80 to-primary/5 backdrop-blur border-2 border-primary/20">
+              <CardContent className="p-8 text-center">
+                <p className="text-sm text-foreground/80 flex items-center justify-center gap-2 flex-wrap">
+                  <span className="text-2xl">🔒</span>
+                  <strong className="text-primary">
+                    100% Private & Secure:
+                  </strong>
+                  All conversions happen in your browser.
+                  <span className="font-semibold">
+                    Files are never uploaded to servers
+                  </span>{" "}
+                  and are
+                  <span className="font-semibold text-primary">
+                    permanently deleted after download.
+                  </span>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
         <CookieConsent />
       </div>

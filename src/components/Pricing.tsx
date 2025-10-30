@@ -55,10 +55,14 @@ const Pricing = () => {
 
               <div className="text-center mb-6">
                 <h3 className="text-3xl font-bold mb-2">{tier.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{tier.description}</p>
+                <p className="text-muted-foreground text-sm mb-4">
+                  {tier.description}
+                </p>
                 <div className="flex items-baseline justify-center gap-2">
                   <span className="text-6xl font-bold">{tier.price}</span>
-                  <span className="text-muted-foreground text-lg">/ {tier.period}</span>
+                  <span className="text-muted-foreground text-lg">
+                    / {tier.period}
+                  </span>
                 </div>
               </div>
 

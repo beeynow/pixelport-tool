@@ -5,23 +5,23 @@ const trustFeatures = [
   {
     icon: Shield,
     title: "100% Secure",
-    description: "All uploads are SSL encrypted for maximum security"
+    description: "All uploads are SSL encrypted for maximum security",
   },
   {
     icon: Trash2,
     title: "Auto-Delete",
-    description: "Files permanently deleted immediately after download"
+    description: "Files permanently deleted immediately after download",
   },
   {
     icon: Lock,
     title: "No Storage",
-    description: "We do not store your files on our servers"
+    description: "We do not store your files on our servers",
   },
   {
     icon: Clock,
     title: "Instant Processing",
-    description: "Lightning-fast conversion with no waiting time"
-  }
+    description: "Lightning-fast conversion with no waiting time",
+  },
 ];
 
 export default function TrustSection() {
@@ -36,13 +36,14 @@ export default function TrustSection() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Convert files with complete confidence. Your data remains private and secure.
+            Convert files with complete confidence. Your data remains private
+            and secure.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {trustFeatures.map((feature, index) => (
-            <div 
+            <div
               key={index}
               className="text-center p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-soft animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
@@ -51,29 +52,44 @@ export default function TrustSection() {
                 <feature.icon className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-semibold mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground">{feature.description}</p>
+              <p className="text-sm text-muted-foreground">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-4">
-            No logs, no cookies required, no user accounts. Your privacy is guaranteed.
+            No logs, no cookies required, no user accounts. Your privacy is
+            guaranteed.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-            <Link to="/privacy" className="text-primary hover:underline font-medium">
+            <Link
+              to="/privacy"
+              className="text-primary hover:underline font-medium"
+            >
               Privacy Policy
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link to="/terms" className="text-primary hover:underline font-medium">
+            <Link
+              to="/terms"
+              className="text-primary hover:underline font-medium"
+            >
               Terms of Service
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link to="/about" className="text-primary hover:underline font-medium">
+            <Link
+              to="/about"
+              className="text-primary hover:underline font-medium"
+            >
               About Us
             </Link>
             <span className="text-muted-foreground">•</span>
-            <Link to="/contact" className="text-primary hover:underline font-medium">
+            <Link
+              to="/contact"
+              className="text-primary hover:underline font-medium"
+            >
               Contact
             </Link>
           </div>

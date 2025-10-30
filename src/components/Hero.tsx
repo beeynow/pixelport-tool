@@ -8,7 +8,10 @@ const Hero = () => {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-glow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-glow" style={{ animationDelay: "1s" }} />
+        <div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-glow"
+          style={{ animationDelay: "1s" }}
+        />
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
@@ -16,7 +19,9 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border shadow-soft">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">Free Online File Converter</span>
+            <span className="text-sm font-medium">
+              Free Online File Converter
+            </span>
           </div>
 
           {/* Main Headline */}
@@ -34,8 +39,8 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               asChild
               className="bg-gradient-primary hover:opacity-90 transition-all shadow-glow text-lg px-10 py-7 group rounded-full"
             >

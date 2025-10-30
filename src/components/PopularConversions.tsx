@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  FileText, 
-  Image as ImageIcon, 
-  FileImage, 
+import {
+  FileText,
+  Image as ImageIcon,
+  FileImage,
   FileAudio,
   FileCode,
   Minimize2,
   FileSpreadsheet,
-  Video
+  Video,
 } from "lucide-react";
 
 const quickConversions = [
@@ -16,32 +16,32 @@ const quickConversions = [
     icon: FileText,
     title: "PDF → Word",
     description: "Convert to DOCX",
-    path: "/conversions"
+    path: "/conversions",
   },
   {
     icon: ImageIcon,
     title: "JPG → PNG",
     description: "Change format",
-    path: "/conversions"
+    path: "/conversions",
   },
   {
     icon: Video,
     title: "MP4 → GIF",
     description: "Video to GIF",
-    path: "/conversions"
+    path: "/conversions",
   },
   {
     icon: FileSpreadsheet,
     title: "Excel → PDF",
     description: "Convert spreadsheet",
-    path: "/conversions"
+    path: "/conversions",
   },
   {
     icon: FileImage,
     title: "PDF → JPG",
     description: "Extract images",
-    path: "/conversions"
-  }
+    path: "/conversions",
+  },
 ];
 
 export default function PopularConversions() {
@@ -59,12 +59,11 @@ export default function PopularConversions() {
 
         <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
           {quickConversions.map((conversion, index) => (
-            <Link 
-              key={index} 
-              to={conversion.path}
-              className="group"
-            >
-              <Card className="hover:shadow-glow transition-all hover:border-primary/50 animate-fade-in" style={{ animationDelay: `${index * 0.05}s` }}>
+            <Link key={index} to={conversion.path} className="group">
+              <Card
+                className="hover:shadow-glow transition-all hover:border-primary/50 animate-fade-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
                 <CardContent className="p-6 flex items-center gap-4 min-w-[200px]">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <conversion.icon className="w-6 h-6 text-primary" />

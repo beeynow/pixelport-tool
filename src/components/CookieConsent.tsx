@@ -36,8 +36,9 @@ const CookieConsent = () => {
             <div className="flex-1">
               <h3 className="font-semibold mb-1">Cookie Preferences</h3>
               <p className="text-sm text-muted-foreground">
-                We use cookies to enhance your experience, analyze site traffic, and personalize content. 
-                By clicking "Accept", you consent to our use of cookies.
+                We use cookies to enhance your experience, analyze site traffic,
+                and personalize content. By clicking "Accept", you consent to
+                our use of cookies.
               </p>
             </div>
           </div>

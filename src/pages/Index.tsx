@@ -13,7 +13,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Free Online File Converter - Convert PDF, Images, Audio & Video | ConvertMe</title>
+        <title>
+          Free Online File Converter - Convert PDF, Images, Audio & Video |
+          ConvertMe
+        </title>
         <meta
           name="description"
           content="Free online file converter: Convert PDF to Word, JPG to PNG, MP4 to MP3, and 60+ formats. No signup required. Fast, secure, 100% free forever."
@@ -23,8 +26,14 @@ const Index = () => {
           content="free file converter, online converter, PDF to Word, image converter, video converter, audio converter, JPG to PNG, MP4 to MP3, free PDF converter, online file conversion"
         />
         <link rel="canonical" href="https://convertme.app" />
-        <meta property="og:title" content="Free Online File Converter - ConvertMe" />
-        <meta property="og:description" content="Convert files online free. PDF, images, audio & video. No signup, always free." />
+        <meta
+          property="og:title"
+          content="Free Online File Converter - ConvertMe"
+        />
+        <meta
+          property="og:description"
+          content="Convert files online free. PDF, images, audio & video. No signup, always free."
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://convertme.app" />
       </Helmet>

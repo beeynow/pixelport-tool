@@ -1098,7 +1098,7 @@ export default function Conversions() {
           <div className="my-10 flex justify-center">
             <ins
               className="adsbygoogle"
-              style={{ display: "block", width: "100%", height: 40 }}
+              style={{ display: "block", width: "100%", height: 50 }}
               data-ad-client="ca-pub-7858868028312077"
               data-ad-slot="3376852857"
               data-ad-format="auto"

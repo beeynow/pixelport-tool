@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -25,6 +25,15 @@ export default function Contact() {
   });
   const [sending, setSending] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    try {
+      // Trigger AdSense ad rendering
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("Adsense error:", e);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,6 +154,17 @@ export default function Contact() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+          {/* ✅ Adsense block */}
+          <div className="my-10 flex justify-center">
+            <ins
+              className="adsbygoogle"
+              style={{ display: "block", width: "100%", height: 90 }}
+              data-ad-client="ca-pub-7858868028312077"
+              data-ad-slot="3376852857"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            ></ins>
           </div>
         </main>
 

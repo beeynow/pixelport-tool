@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -10,6 +11,27 @@ import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 
 const Index = () => {
+  useEffect(() => {
+    const existingScript = document.querySelector(
+      'script[src*="adsbygoogle.js"]'
+    );
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.setAttribute("data-ad-client", "ca-pub-7858868028312077");
+      document.head.appendChild(script);
+    }
+
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("Adsense error:", e);
+    }
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -46,6 +68,17 @@ const Index = () => {
         <HowItWorks />
         <Features />
         <TrustSection />
+        {/* ✅ AdSense block */}
+        <div className="my-10 flex justify-center">
+          <ins
+            className="adsbygoogle"
+            style={{ display: "block", width: "100%", height: 90 }}
+            data-ad-client="ca-pub-7858868028312077"
+            data-ad-slot="3376852857"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
         <Footer />
         <CookieConsent />
       </div>

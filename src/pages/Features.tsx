@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
+import { useEffect } from "react";
 import Footer from "@/components/Footer";
 import {
   FileText,
@@ -11,6 +12,14 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Features() {
+  useEffect(() => {
+    try {
+      // Trigger AdSense ad rendering
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("Adsense error:", e);
+    }
+  }, []);
   const features = [
     {
       category: "Image Conversion",
@@ -158,6 +167,17 @@ export default function Features() {
                 </Card>
               ))}
             </div>
+          </div>
+          {/* ✅ AdSense block */}
+          <div className="my-10 flex justify-center">
+            <ins
+              className="adsbygoogle"
+              style={{ display: "block", width: "100%", height: 90 }}
+              data-ad-client="ca-pub-7858868028312077"
+              data-ad-slot="3376852857"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            ></ins>
           </div>
         </main>
 

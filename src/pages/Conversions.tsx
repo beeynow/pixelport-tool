@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import CookieConsent from "@/components/CookieConsent";
@@ -15,13 +15,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -71,6 +65,15 @@ export default function Conversions() {
   const [completed, setCompleted] = useState(false);
   const [currentTool, setCurrentTool] = useState<string>("");
   const { toast } = useToast();
+
+  useEffect(() => {
+    try {
+      // Trigger AdSense ad rendering
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("Adsense error:", e);
+    }
+  }, []);
 
   const categories: Category[] = [
     {
@@ -1079,6 +1082,17 @@ export default function Conversions() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+          {/* ✅ Adsense block */}
+          <div className="my-10 flex justify-center">
+            <ins
+              className="adsbygoogle"
+              style={{ display: "block", width: "100%", height: 90 }}
+              data-ad-client="ca-pub-7858868028312077"
+              data-ad-slot="3376852857"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            ></ins>
           </div>
         </div>
         <CookieConsent />

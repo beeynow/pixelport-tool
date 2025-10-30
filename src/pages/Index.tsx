@@ -72,7 +72,7 @@ const Index = () => {
         <div className="my-10 flex justify-center">
           <ins
             className="adsbygoogle"
-            style={{ display: "inline-block", width: 300, height: 50 }}
+            style={{ display: "inline-block", width: 600, height: 50 }}
             data-ad-client="ca-pub-7858868028312077"
             data-ad-slot="3376852857"
           />

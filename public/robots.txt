@@ -1,6 +1,5 @@
-
 # ------------------------
-# Google Bots (search, ads, analytics)
+# Google Bots (Search, Ads, Analytics)
 # ------------------------
 User-agent: Googlebot
 User-agent: Googlebot-Image
@@ -11,9 +10,18 @@ User-agent: Mediapartners-Google
 User-agent: AdsBot-Google-Mobile
 User-agent: Google-Structured-Data-Testing-Tool
 Allow: /
+Allow: /$
+Allow: /ads.txt
+Allow: /sitemap.xml
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.svg$
+Allow: /*.webp$
 
 # ------------------------
-# Other major search engines
+# Other Major Search Engines
 # ------------------------
 User-agent: Bingbot
 User-agent: Slurp
@@ -24,15 +32,15 @@ User-agent: Sogou
 Allow: /
 
 # ------------------------
-# All other bots
+# All Other Bots
 # ------------------------
 User-agent: *
 Allow: /
-
-# Optionally block query parameters if needed
-# Disallow: /*?*
+# Optional: Disallow backend or private sections if any
+# Disallow: /admin/
+# Disallow: /api/private/
 
 # ------------------------
-# Sitemap location
+# Sitemap Location
 # ------------------------
 Sitemap: https://convertany.site/sitemap.xml

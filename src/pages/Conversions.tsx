@@ -67,12 +67,32 @@ export default function Conversions() {
   const { toast } = useToast();
 
   useEffect(() => {
-    try {
-      // Trigger AdSense ad rendering
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error("Adsense error:", e);
+    // Check if AdSense script is already on the page
+    const existingScript = document.querySelector(
+      'script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]'
+    );
+
+    // If not present, inject it
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6746133241342087";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
     }
+
+    // Trigger ad load
+    const timeout = setTimeout(() => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("AdSense load error:", e);
+      }
+    }, 500);
+
+    // Cleanup
+    return () => clearTimeout(timeout);
   }, []);
 
   const categories: Category[] = [
@@ -1060,13 +1080,13 @@ export default function Conversions() {
                 </div>
               </TabsContent>
             ))}
-            {/* ✅ Adsense block */}
+            {/* ✅ AdSense block */}
             <div className="my-10 flex justify-center">
               <ins
-                className="adsbygoogle"
-                style={{ display: "block", width: "100%", height: 50 }}
-                data-ad-client="ca-pub-7858868028312077"
-                data-ad-slot="3376852857"
+                class="adsbygoogle"
+                style="display:inline-block;width:600px;height:100px"
+                data-ad-client="ca-pub-6746133241342087"
+                data-ad-slot="3006205814"
               ></ins>
             </div>
           </Tabs>
@@ -1092,14 +1112,18 @@ export default function Conversions() {
               </CardContent>
             </Card>
           </div>
-          {/* ✅ Adsense block */}
+          {/* ✅ AdSense block */}
           <div className="my-10 flex justify-center">
             <ins
               className="adsbygoogle"
-              style={{ display: "inline-block", width: 600, height: 50 }}
-              data-ad-client="ca-pub-7858868028312077"
-              data-ad-slot="3376852857"
-            />
+              style={{
+                display: "inline-block",
+                width: "600px",
+                height: "50px",
+              }}
+              data-ad-client="ca-pub-6746133241342087"
+              data-ad-slot="4334657400"
+            ></ins>
           </div>
         </div>
         <CookieConsent />

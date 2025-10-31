@@ -178,10 +178,14 @@ export default function Contact() {
           {/* ✅ Adsense block */}
           <div className="my-10 flex justify-center">
             <ins
-              class="adsbygoogle"
-              style="display:inline-block;width:600px;height:100px"
+              className="adsbygoogle"
+              style={{
+                display: "inline-block",
+                width: "600px",
+                height: "50px",
+              }}
               data-ad-client="ca-pub-6746133241342087"
-              data-ad-slot="3006205814"
+              data-ad-slot="4334657400"
             ></ins>
           </div>
         </main>

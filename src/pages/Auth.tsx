@@ -11,15 +11,15 @@ const Auth = () => {
     <>
       <Helmet>
         <title>
-          {isSignUp ? "Sign Up" : "Sign In"} - ConvertMe | Professional File
+          {isSignUp ? "Sign Up" : "Sign In"} - Convertany | Professional File
           Conversion
         </title>
         <meta
           name="description"
           content={
             isSignUp
-              ? "Create your ConvertMe account to access unlimited file conversions and premium features."
-              : "Sign in to your ConvertMe account to access your file conversions."
+              ? "Create your  account to access unlimited file conversions and premium features."
+              : "Sign in to your Convertany account to access your file conversions."
           }
         />
       </Helmet>
@@ -35,7 +35,7 @@ const Auth = () => {
                 <FileType className="h-6 w-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                ConvertMe
+                Convertany
               </span>
             </Link>
             <h1 className="text-3xl font-bold mt-4">Welcome Back</h1>

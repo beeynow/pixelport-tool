@@ -37,7 +37,7 @@ const Index = () => {
       <Helmet>
         <title>
           Free Online File Converter - Convert PDF, Images, Audio & Video |
-          ConvertMe
+          Convertany
         </title>
         <meta
           name="description"
@@ -47,17 +47,17 @@ const Index = () => {
           name="keywords"
           content="free file converter, online converter, PDF to Word, image converter, video converter, audio converter, JPG to PNG, MP4 to MP3, free PDF converter, online file conversion"
         />
-        <link rel="canonical" href="https://convertme.app" />
+        <link rel="canonical" href="https://convertany.site" />
         <meta
           property="og:title"
-          content="Free Online File Converter - ConvertMe"
+          content="Free Online File Converter - Convertany"
         />
         <meta
           property="og:description"
           content="Convert files online free. PDF, images, audio & video. No signup, always free."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://convertme.app" />
+        <meta property="og:url" content="https://convertany.site" />
       </Helmet>
 
       <div className="min-h-screen">

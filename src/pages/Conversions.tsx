@@ -873,7 +873,7 @@ export default function Conversions() {
       <Helmet>
         <title>
           Free Online File Converter - 62+ Tools | PDF, Image, Audio, Video |
-          ConvertMe
+          Convertany
         </title>
         <meta
           name="description"
@@ -883,7 +883,7 @@ export default function Conversions() {
           name="keywords"
           content="free online converter, PDF to Word, JPG to PNG, image converter, video converter, audio converter, file conversion tools, convert files online free"
         />
-        <link rel="canonical" href="https://convertme.app/conversions" />
+        <link rel="canonical" href="https://convertany.site/conversions" />
         <meta
           property="og:title"
           content="Free Online File Converter - 62+ Tools"

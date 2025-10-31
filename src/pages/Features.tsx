@@ -186,20 +186,20 @@ export default function Features() {
                   </CardContent>
                 </Card>
               ))}
-              {/* ✅ AdSense block */}
-              <div className="my-10 flex justify-center">
-                <ins
-                  className="adsbygoogle"
-                  style={{
-                    display: "inline-block",
-                    width: "600px",
-                    height: "50px",
-                  }}
-                  data-ad-client="ca-pub-6746133241342087"
-                  data-ad-slot="4334657400"
-                ></ins>
-              </div>
             </div>
+          </div>
+          {/* ✅ AdSense block */}
+          <div className="my-10 flex justify-center">
+            <ins
+              className="adsbygoogle"
+              style={{
+                display: "inline-block",
+                width: "600px",
+                height: "50px",
+              }}
+              data-ad-client="ca-pub-6746133241342087"
+              data-ad-slot="4334657400"
+            ></ins>
           </div>
           {/* ✅ AdSense block */}
           <div className="my-10 flex justify-center">

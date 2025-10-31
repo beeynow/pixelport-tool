@@ -75,12 +75,6 @@ const Index = () => {
         <QuickUpload />
         <HowItWorks />
         <Features />
-        <ins
-          class="adsbygoogle"
-          style="display:inline-block;width:600px;height:100px"
-          data-ad-client="ca-pub-6746133241342087"
-          data-ad-slot="3006205814"
-        ></ins>
         <TrustSection />
         {/* ✅ AdSense block */}
         <div className="my-10 flex justify-center">

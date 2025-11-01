@@ -1,14 +1,13 @@
 import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Upload, Loader2, CheckCircle2, ArrowRight } from "lucide-react";
+import { Upload, Loader2, CheckCircle2, ArrowRight, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { downloadFile } from "@/lib/conversions";
 
 type RelatedTool = {
   name: string;
@@ -42,6 +41,7 @@ export default function ConversionPage({
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [convertedBlob, setConvertedBlob] = useState<Blob | null>(null);
   const { toast } = useToast();
 
   const handleFileSelect = useCallback(
@@ -60,11 +60,12 @@ export default function ConversionPage({
     async (files: File[]) => {
       setConverting(true);
       setProgress(0);
+      setConvertedBlob(null);
 
       try {
         const progressInterval = setInterval(() => {
           setProgress((prev) => Math.min(prev + 5, 95));
-        }, 150);
+        }, 100);
 
         await conversionHandler(files);
 
@@ -74,29 +75,45 @@ export default function ConversionPage({
 
         toast({
           title: "✓ Conversion complete!",
-          description:
-            "Your file has been converted and downloaded successfully.",
+          description: "Your file has been converted successfully.",
         });
-
-        setTimeout(() => {
-          setSelectedFiles([]);
-          setProgress(0);
-          setCompleted(false);
-        }, 3000);
       } catch (error) {
         toast({
           title: "Conversion failed",
-          description:
-            "There was an error converting your file. Please try again.",
+          description: "There was an error converting your file. Please try again.",
           variant: "destructive",
         });
         setProgress(0);
+        setCompleted(false);
       } finally {
         setConverting(false);
       }
     },
     [conversionHandler, toast]
   );
+
+  const handleShare = async () => {
+    if (navigator.share && convertedBlob) {
+      try {
+        const file = new File([convertedBlob], `converted.${outputExtension}`, {
+          type: convertedBlob.type,
+        });
+        await navigator.share({
+          files: [file],
+          title: "Converted File",
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    }
+  };
+
+  const handleNewConversion = () => {
+    setSelectedFiles([]);
+    setProgress(0);
+    setCompleted(false);
+    setConvertedBlob(null);
+  };
 
   return (
     <>
@@ -186,13 +203,26 @@ export default function ConversionPage({
             {completed && (
               <Card className="mb-8 border-2 border-primary animate-scale-in">
                 <CardContent className="p-8">
-                  <div className="flex items-center justify-center gap-4 text-primary">
-                    <CheckCircle2 className="w-12 h-12" />
-                    <div>
-                      <p className="text-2xl font-bold">Success!</p>
-                      <p className="text-sm text-foreground/80">
-                        File converted and downloaded
-                      </p>
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-center gap-4 text-primary">
+                      <CheckCircle2 className="w-12 h-12" />
+                      <div>
+                        <p className="text-2xl font-bold">Success!</p>
+                        <p className="text-sm text-foreground/80">
+                          File converted successfully
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 justify-center">
+                      <Button onClick={handleNewConversion} size="lg">
+                        Convert Another File
+                      </Button>
+                      {navigator.share && (
+                        <Button onClick={handleShare} variant="outline" size="lg">
+                          <Share2 className="w-4 h-4 mr-2" />
+                          Share
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </CardContent>

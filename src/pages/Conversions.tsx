@@ -85,7 +85,7 @@ export default function Conversions() {
     // Trigger ad load
     const timeout = setTimeout(() => {
       try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
       } catch (e) {
         console.error("AdSense load error:", e);
       }

@@ -86,12 +86,12 @@ const PasswordGenerator = lazy(() => import("./pages/conversions/PasswordGenerat
 const TextConverter = lazy(() => import("./pages/conversions/TextConverter"));
 const WordCounter = lazy(() => import("./pages/conversions/WordCounter"));
 
-// Loading fallback component
+// Optimized loading fallback component
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-hero">
-    <div className="animate-pulse text-center">
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="text-center">
       <div className="h-12 w-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-      <p className="text-muted-foreground">Loading...</p>
+      <p className="text-sm text-muted-foreground">Loading...</p>
     </div>
   </div>
 );

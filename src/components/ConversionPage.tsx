@@ -22,8 +22,9 @@ type ConversionPageProps = {
   acceptedFiles: string;
   multipleFiles?: boolean;
   outputExtension: string;
-  conversionHandler: (files: File[]) => Promise<void>;
+  conversionHandler: (files: File[], options?: any) => Promise<void>;
   relatedTools: RelatedTool[];
+  renderEditOptions?: (files: File[], onOptionsChange: (options: any) => void) => React.ReactNode;
 };
 
 export default function ConversionPage({
@@ -36,12 +37,15 @@ export default function ConversionPage({
   outputExtension,
   conversionHandler,
   relatedTools,
+  renderEditOptions,
 }: ConversionPageProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [convertedBlob, setConvertedBlob] = useState<Blob | null>(null);
+  const [editOptions, setEditOptions] = useState<any>({});
+  const [showEditUI, setShowEditUI] = useState(false);
   const { toast } = useToast();
 
   const handleFileSelect = useCallback(
@@ -50,24 +54,29 @@ export default function ConversionPage({
       if (files.length > 0) {
         setSelectedFiles(files);
         setCompleted(false);
-        handleConvert(files);
+        if (renderEditOptions) {
+          setShowEditUI(true);
+        } else {
+          handleConvert(files);
+        }
       }
     },
-    []
+    [renderEditOptions]
   );
 
   const handleConvert = useCallback(
-    async (files: File[]) => {
+    async (files: File[], options?: any) => {
       setConverting(true);
       setProgress(0);
       setConvertedBlob(null);
+      setShowEditUI(false);
 
       try {
         const progressInterval = setInterval(() => {
           setProgress((prev) => Math.min(prev + 5, 95));
         }, 100);
 
-        await conversionHandler(files);
+        await conversionHandler(files, options || editOptions);
 
         clearInterval(progressInterval);
         setProgress(100);
@@ -89,7 +98,7 @@ export default function ConversionPage({
         setConverting(false);
       }
     },
-    [conversionHandler, toast]
+    [conversionHandler, toast, editOptions]
   );
 
   const handleShare = async () => {
@@ -113,6 +122,8 @@ export default function ConversionPage({
     setProgress(0);
     setCompleted(false);
     setConvertedBlob(null);
+    setShowEditUI(false);
+    setEditOptions({});
   };
 
   return (
@@ -167,6 +178,34 @@ export default function ConversionPage({
                 </label>
               </CardContent>
             </Card>
+
+            {/* Edit Options UI */}
+            {showEditUI && selectedFiles.length > 0 && renderEditOptions && (
+              <Card className="mb-8 border-2 border-primary/30 animate-scale-in">
+                <CardContent className="p-8">
+                  <h3 className="text-xl font-bold mb-6 text-center">
+                    Customize Your Conversion
+                  </h3>
+                  {renderEditOptions(selectedFiles, setEditOptions)}
+                  <div className="flex justify-center gap-3 mt-6">
+                    <Button
+                      onClick={() => handleConvert(selectedFiles, editOptions)}
+                      size="lg"
+                      disabled={converting}
+                    >
+                      Convert Now
+                    </Button>
+                    <Button
+                      onClick={handleNewConversion}
+                      variant="outline"
+                      size="lg"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Conversion Progress */}
             {converting && (

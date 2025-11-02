@@ -1,5 +1,8 @@
 import ConversionPage from "@/components/ConversionPage";
 import { downloadFile } from "@/lib/conversions";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 export default function HashGenerator() {
   return (
@@ -10,12 +13,41 @@ export default function HashGenerator() {
       h1="Hash Generator"
       acceptedFiles="*"
       outputExtension="txt"
-      conversionHandler={async (files) => {
+      renderEditOptions={(files, setOptions) => {
+        const [algorithm, setAlgorithm] = useState<"SHA-1" | "SHA-256" | "SHA-384" | "SHA-512">("SHA-256");
+
+        const algorithms: Array<"SHA-1" | "SHA-256" | "SHA-384" | "SHA-512"> = ["SHA-1", "SHA-256", "SHA-384", "SHA-512"];
+
+        return (
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <Label>Hash Algorithm</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {algorithms.map((algo) => (
+                  <Button
+                    key={algo}
+                    variant={algorithm === algo ? "default" : "outline"}
+                    onClick={() => {
+                      setAlgorithm(algo);
+                      setOptions({ algorithm: algo });
+                    }}
+                    className="w-full"
+                  >
+                    {algo}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }}
+      conversionHandler={async (files, options) => {
+        const algorithm = options?.algorithm || "SHA-256";
         const arrayBuffer = await files[0].arrayBuffer();
-        const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+        const hashBuffer = await crypto.subtle.digest(algorithm, arrayBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        const result = `SHA-256: ${hashHex}\nFile: ${files[0].name}`;
+        const result = `${algorithm}: ${hashHex}\nFile: ${files[0].name}`;
         const blob = new Blob([result], { type: 'text/plain' });
         downloadFile(blob, "hash.txt");
       }}

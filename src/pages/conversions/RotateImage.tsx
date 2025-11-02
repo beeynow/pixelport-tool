@@ -1,5 +1,9 @@
 import ConversionPage from "@/components/ConversionPage";
 import { downloadFile } from "@/lib/conversions";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RotateCw } from "lucide-react";
 
 export default function RotateImage() {
   return (
@@ -10,7 +14,36 @@ export default function RotateImage() {
       h1="Rotate Image"
       acceptedFiles=".jpg,.jpeg,.png,.webp"
       outputExtension="jpg"
-      conversionHandler={async (files) => {
+      renderEditOptions={(files, setOptions) => {
+        const [angle, setAngle] = useState(90);
+
+        const angles = [90, 180, 270];
+
+        return (
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <Label>Rotation Angle</Label>
+              <div className="grid grid-cols-3 gap-3">
+                {angles.map((deg) => (
+                  <Button
+                    key={deg}
+                    variant={angle === deg ? "default" : "outline"}
+                    onClick={() => {
+                      setAngle(deg);
+                      setOptions({ angle: deg });
+                    }}
+                    className="w-full"
+                  >
+                    <RotateCw className="w-4 h-4 mr-2" />
+                    {deg}°
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }}
+      conversionHandler={async (files, options) => {
         const file = files[0];
         const img = document.createElement('img');
         const url = URL.createObjectURL(file);
@@ -20,13 +53,20 @@ export default function RotateImage() {
           img.src = url;
         });
         
+        const angle = options?.angle || 90;
         const canvas = document.createElement('canvas');
-        canvas.width = img.height;
-        canvas.height = img.width;
+        
+        if (angle === 90 || angle === 270) {
+          canvas.width = img.height;
+          canvas.height = img.width;
+        } else {
+          canvas.width = img.width;
+          canvas.height = img.height;
+        }
         
         const ctx = canvas.getContext('2d')!;
         ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate(90 * Math.PI / 180);
+        ctx.rotate(angle * Math.PI / 180);
         ctx.drawImage(img, -img.width / 2, -img.height / 2);
         
         canvas.toBlob((blob) => {

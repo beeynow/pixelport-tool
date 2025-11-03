@@ -156,15 +156,17 @@ export default function ConversionPage({
                   <div className="border-2 border-dashed border-border hover:border-primary rounded-lg p-12 text-center transition-all hover:bg-primary/5">
                     <Upload className="w-16 h-16 mx-auto mb-4 text-primary" />
                     <h3 className="text-xl font-semibold mb-2">
-                      {multipleFiles
-                        ? "Click to upload files"
-                        : "Click to upload file"}
+                      Drag & drop files here
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {multipleFiles
-                        ? "Select multiple files"
-                        : "Select a file"}{" "}
-                      to convert
+                    <p className="text-sm text-muted-foreground mb-4">
+                      or click to browse
+                    </p>
+                    <Button type="button" variant="outline" size="lg" className="gap-2 pointer-events-none">
+                      <Upload className="h-5 w-5" />
+                      Choose Files
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-4">
+                      Accepted formats: {acceptedFiles}
                     </p>
                   </div>
                   <input

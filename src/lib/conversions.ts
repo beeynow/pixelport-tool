@@ -67,12 +67,38 @@ export const convertCsvToExcel = async (file: File): Promise<Blob> => {
   return new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 };
 
-export const convertTextToPdf = async (file: File): Promise<Blob> => {
-  const text = await file.text();
+export const convertTextToPdf = async (
+  input: File | string, 
+  options?: { fontSize?: number; fontWeight?: string; padding?: number }
+): Promise<Blob> => {
+  const text = typeof input === 'string' ? input : await input.text();
   const pdf = new jsPDF();
   
-  const lines = pdf.splitTextToSize(text, 180);
-  pdf.text(lines, 15, 15);
+  const fontSize = options?.fontSize || 12;
+  const fontWeight = options?.fontWeight || 'normal';
+  const padding = options?.padding || 15;
+  
+  pdf.setFontSize(fontSize);
+  if (fontWeight === 'bold') {
+    pdf.setFont(undefined, 'bold');
+  }
+  
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const maxWidth = pageWidth - (padding * 2);
+  const lines = pdf.splitTextToSize(text, maxWidth);
+  
+  let y = padding;
+  const lineHeight = fontSize * 0.5;
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  
+  lines.forEach((line: string, index: number) => {
+    if (y + lineHeight > pageHeight - padding) {
+      pdf.addPage();
+      y = padding;
+    }
+    pdf.text(line, padding, y);
+    y += lineHeight;
+  });
   
   return pdf.output('blob');
 };

@@ -75,9 +75,18 @@ export default function Contact() {
         <title>Contact Us | ConvertAny.site - Get in Touch</title>
         <meta
           name="description"
-          content="Contact ConvertAny.site for support, feedback, or business inquiries. We typically respond within 1-3 business days."
+          content="Contact ConvertAny.site for support, feedback, or business inquiries. Email us at convertany.site@gmail.com or use our contact form. We typically respond within 1-3 business days."
         />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="contact convertany, file converter support, convertany help, customer service" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://convertany.site/contact" />
+        <meta property="og:title" content="Contact ConvertAny.site" />
+        <meta property="og:description" content="Get in touch with ConvertAny.site for support, feedback, or business inquiries." />
+        <meta property="og:url" content="https://convertany.site/contact" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact ConvertAny.site" />
+        <meta name="twitter:description" content="Reach out for support, feedback, or business inquiries." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

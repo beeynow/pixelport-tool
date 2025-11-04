@@ -132,9 +132,15 @@ export default function ConversionPage({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href={`https://convertany.site${window.location.pathname}`} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
+        <meta property="og:url" content={`https://convertany.site${window.location.pathname}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

@@ -12,9 +12,18 @@ export default function About() {
         <title>About Us | ConvertAny.site - Free Online File Converter</title>
         <meta
           name="description"
-          content="ConvertAny.site is a free, easy-to-use online file conversion platform built for students, creators, and professionals."
+          content="ConvertAny.site is a free, easy-to-use online file conversion platform built for students, creators, and professionals. Learn about our 62+ conversion tools, privacy-first approach, and mission to make file conversion simple for everyone."
         />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="about convertany, file converter platform, free conversion tools, online converter about" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://convertany.site/about" />
+        <meta property="og:title" content="About ConvertAny.site - Free Online File Converter" />
+        <meta property="og:description" content="Learn about ConvertAny.site - a free, easy-to-use online file conversion platform with 62+ tools." />
+        <meta property="og:url" content="https://convertany.site/about" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About ConvertAny.site" />
+        <meta name="twitter:description" content="Free online file conversion platform with 62+ tools for students, creators, and professionals." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

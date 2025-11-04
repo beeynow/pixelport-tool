@@ -7,12 +7,21 @@ export default function Privacy() {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | ConvertAny.site</title>
+        <title>Privacy Policy | ConvertAny.site - GDPR, CCPA & CalOPPA Compliant</title>
         <meta
           name="description"
-          content="ConvertAny.site Privacy Policy — Learn how we collect, use, and protect your information. Fully compliant with AdSense, Analytics, GDPR, CCPA, and CalOPPA."
+          content="ConvertAny.site Privacy Policy - Learn how we collect, use, and protect your information. Fully compliant with AdSense, Analytics, GDPR, CCPA, and CalOPPA. Your privacy is our priority."
         />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="privacy policy, convertany privacy, data protection, GDPR, CCPA, user privacy" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://convertany.site/privacy" />
+        <meta property="og:title" content="Privacy Policy - ConvertAny.site" />
+        <meta property="og:description" content="Comprehensive privacy policy covering data collection, usage, and your privacy rights." />
+        <meta property="og:url" content="https://convertany.site/privacy" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Privacy Policy - ConvertAny.site" />
+        <meta name="twitter:description" content="Learn how we protect your data and respect your privacy." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

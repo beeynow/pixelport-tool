@@ -6,12 +6,21 @@ export default function Terms() {
   return (
     <>
       <Helmet>
-        <title>Terms & Conditions | ConvertAny.site</title>
+        <title>Terms & Conditions | ConvertAny.site - Service Usage Agreement</title>
         <meta
           name="description"
-          content="Terms and Conditions for ConvertAny.site - Free online file converter usage terms."
+          content="Terms and Conditions for ConvertAny.site - Read our terms of service, usage policies, and legal information for using our free online file converter tools. Understand your rights and responsibilities."
         />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="terms and conditions, convertany terms, service agreement, usage policy, legal terms" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://convertany.site/terms" />
+        <meta property="og:title" content="Terms & Conditions - ConvertAny.site" />
+        <meta property="og:description" content="Read our terms of service and usage policies for ConvertAny.site." />
+        <meta property="og:url" content="https://convertany.site/terms" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Terms & Conditions - ConvertAny.site" />
+        <meta name="twitter:description" content="Service usage agreement and legal terms for ConvertAny.site." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

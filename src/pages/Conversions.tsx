@@ -1,24 +1,21 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import CookieConsent from "@/components/CookieConsent";
 import {
-  Upload,
   FileText,
   Image as ImageIcon,
   Film,
   Music,
-  CheckCircle2,
-  Loader2,
   FileCode,
   Package,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 import {
   convertPdfToWord,
   convertWordToPdf,
@@ -59,13 +56,6 @@ type ConversionTool = {
 };
 
 export default function Conversions() {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [converting, setConverting] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [completed, setCompleted] = useState(false);
-  const [currentTool, setCurrentTool] = useState<string>("");
-  const { toast } = useToast();
-
   useEffect(() => {
     // Check if AdSense script is already on the page
     const existingScript = document.querySelector(
@@ -825,66 +815,6 @@ export default function Conversions() {
     },
   ];
 
-  const handleFileSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, tool: ConversionTool) => {
-      const files = Array.from(e.target.files || []);
-      if (files.length > 0) {
-        setSelectedFiles(files);
-        setCompleted(false);
-        setCurrentTool(tool.name);
-        handleConvert(tool, files);
-      }
-    },
-    []
-  );
-
-  const handleConvert = useCallback(
-    async (tool: ConversionTool, files: File[]) => {
-      setConverting(true);
-      setProgress(0);
-
-      try {
-        const progressInterval = setInterval(() => {
-          setProgress((prev) => {
-            const newProgress = prev + 5;
-            return Math.min(newProgress, 95);
-          });
-        }, 150);
-
-        await tool.handler(files);
-
-        clearInterval(progressInterval);
-        setProgress(100);
-        setCompleted(true);
-
-        toast({
-          title: "✓ Conversion complete!",
-          description:
-            "Your file has been optimized and downloaded successfully.",
-        });
-
-        setTimeout(() => {
-          setSelectedFiles([]);
-          setProgress(0);
-          setCompleted(false);
-          setCurrentTool("");
-        }, 3000);
-      } catch (error) {
-        toast({
-          title: "Conversion failed",
-          description:
-            "There was an error converting your file. Please try again.",
-          variant: "destructive",
-        });
-        setProgress(0);
-        setCurrentTool("");
-      } finally {
-        setConverting(false);
-      }
-    },
-    [toast]
-  );
-
   const getToolsByCategory = (categoryId: string) =>
     conversionTools.filter((t) => t.categoryId === categoryId);
 
@@ -934,67 +864,6 @@ export default function Conversions() {
               speed
             </p>
           </div>
-
-          {/* Conversion Progress */}
-          {converting && (
-            <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
-              <Card className="border-2 border-primary/30 bg-gradient-to-br from-card/95 to-primary/5 backdrop-blur shadow-glow">
-                <CardContent className="p-8">
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="relative">
-                        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                        <div className="absolute inset-0 blur-xl bg-primary/30 animate-pulse" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xl font-bold">
-                          Converting {currentTool}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          Optimizing file size...
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm font-medium">
-                        <span>
-                          {progress < 100 ? "Processing..." : "Complete!"}
-                        </span>
-                        <span className="text-primary text-lg font-bold">
-                          {progress}%
-                        </span>
-                      </div>
-                      <Progress value={progress} className="h-4 bg-muted/50" />
-                    </div>
-
-                    <p className="text-center text-xs text-muted-foreground">
-                      File will be auto-deleted after download
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {/* Success Message */}
-          {completed && (
-            <div className="max-w-2xl mx-auto mb-8 animate-scale-in">
-              <Card className="border-2 border-primary bg-gradient-to-br from-primary/20 via-primary/10 to-transparent backdrop-blur shadow-glow">
-                <CardContent className="p-8">
-                  <div className="flex items-center justify-center gap-4 text-primary">
-                    <CheckCircle2 className="w-12 h-12 animate-pulse" />
-                    <div>
-                      <p className="text-2xl font-bold">Success!</p>
-                      <p className="text-sm text-foreground/80">
-                        File downloaded & deleted from system
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
 
           {/* Tabs Navigation */}
           <Tabs defaultValue="image" className="max-w-7xl mx-auto">
@@ -1053,26 +922,16 @@ export default function Conversions() {
                             </div>
                           </div>
 
-                          <label className="cursor-pointer block">
-                            <Button
-                              className="w-full group-hover:shadow-lg transition-all"
-                              disabled={converting}
-                              size="sm"
-                              asChild
-                            >
-                              <span>
-                                <Upload className="w-3 h-3 mr-2" />
-                                {tool.multipleFiles ? "Upload Files" : "Upload"}
-                              </span>
-                            </Button>
-                            <input
-                              type="file"
-                              className="hidden"
-                              accept={tool.acceptedFiles}
-                              multiple={tool.multipleFiles}
-                              onChange={(e) => handleFileSelect(e, tool)}
-                            />
-                          </label>
+                          <Button
+                            className="w-full group-hover:shadow-lg transition-all"
+                            size="sm"
+                            asChild
+                          >
+                            <Link to={`/${tool.id}`}>
+                              <ArrowRight className="w-3 h-3 mr-2" />
+                              Select
+                            </Link>
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>

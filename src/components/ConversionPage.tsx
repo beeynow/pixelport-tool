@@ -167,10 +167,18 @@ export default function ConversionPage({
                     <p className="text-sm text-muted-foreground mb-4">
                       or click to browse
                     </p>
-                    <Button type="button" variant="outline" size="lg" className="gap-2 pointer-events-none">
-                      <Upload className="h-5 w-5" />
-                      Choose Files
-                    </Button>
+                    <div className="flex gap-3 justify-center items-center">
+                      <Button type="button" variant="outline" size="lg" className="gap-2 pointer-events-none">
+                        <Upload className="h-5 w-5" />
+                        Choose Files
+                      </Button>
+                      <Link to="/conversions">
+                        <Button type="button" variant="default" size="lg" className="gap-2">
+                          <ArrowRight className="h-5 w-5" />
+                          Select Tool
+                        </Button>
+                      </Link>
+                    </div>
                     <p className="text-xs text-muted-foreground mt-4">
                       Accepted formats: {acceptedFiles}
                     </p>

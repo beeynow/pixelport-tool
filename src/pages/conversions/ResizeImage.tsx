@@ -1,123 +1,231 @@
-import ConversionPage from "@/components/ConversionPage";
-import { downloadFile } from "@/lib/conversions";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Download, Upload, FileText, Link as LinkIcon } from "lucide-react";
+import { downloadFile } from "@/lib/conversions";
+import { toast } from "sonner";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
 
 export default function ResizeImage() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [width, setWidth] = useState<number>(1920);
+  const [height, setHeight] = useState<number>(1080);
+  const [maintainAspect, setMaintainAspect] = useState(true);
+  const [originalDimensions, setOriginalDimensions] = useState({ width: 0, height: 0 });
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (selectedFile) {
+      const url = URL.createObjectURL(selectedFile);
+      const img = new Image();
+      img.onload = () => {
+        setOriginalDimensions({ width: img.width, height: img.height });
+        setWidth(img.width);
+        setHeight(img.height);
+      };
+      img.src = url;
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [selectedFile]);
+
+  useEffect(() => {
+    if (imageUrl && width && height) {
+      updatePreview();
+    }
+  }, [imageUrl, width, height]);
+
+  const updatePreview = async () => {
+    if (!canvasRef.current || !imageUrl) return;
+
+    const img = new Image();
+    img.src = imageUrl;
+    await new Promise((resolve) => (img.onload = resolve));
+
+    const canvas = canvasRef.current;
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d")!;
+    ctx.drawImage(img, 0, 0, width, height);
+
+    setPreviewUrl(canvas.toDataURL("image/jpeg", 0.9));
+  };
+
+  const handleWidthChange = (newWidth: number) => {
+    setWidth(newWidth);
+    if (maintainAspect && originalDimensions.width > 0) {
+      const ratio = originalDimensions.height / originalDimensions.width;
+      setHeight(Math.round(newWidth * ratio));
+    }
+  };
+
+  const handleHeightChange = (newHeight: number) => {
+    setHeight(newHeight);
+    if (maintainAspect && originalDimensions.height > 0) {
+      const ratio = originalDimensions.width / originalDimensions.height;
+      setWidth(Math.round(newHeight * ratio));
+    }
+  };
+
+  const handleDownload = () => {
+    if (!canvasRef.current) return;
+    canvasRef.current.toBlob((blob) => {
+      if (blob) {
+        downloadFile(blob, "resized.jpg");
+        toast.success("Image resized successfully!");
+      }
+    }, "image/jpeg", 0.9);
+  };
+
+  const relatedTools = [
+    { name: "Compress Image", path: "/compress-image" },
+    { name: "JPG to PNG", path: "/jpg-to-png" },
+    { name: "PNG to JPG", path: "/png-to-jpg" },
+    { name: "Crop Image", path: "/crop-image" },
+  ];
+
   return (
-    <ConversionPage
-      title="Free Image Resizer Online | Resize Images | ConvertAny"
-      description="Resize images online for free. Fast, secure, and easy image resizing with no sign-up required."
-      keywords="resize image, image resizer, scale image, resize photo, online image resize"
-      h1="Resize Image"
-      acceptedFiles=".jpg,.jpeg,.png,.webp"
-      outputExtension="jpg"
-      renderEditOptions={(files, setOptions) => {
-        const [width, setWidth] = useState<number>(1920);
-        const [height, setHeight] = useState<number>(1080);
-        const [maintainAspect, setMaintainAspect] = useState(true);
+    <>
+      <Helmet>
+        <title>Free Image Resizer Online | Resize Images | ConvertAny</title>
+        <meta name="description" content="Resize images online for free. Fast, secure, and easy image resizing with no sign-up required." />
+        <meta name="keywords" content="resize image, image resizer, scale image, resize photo, online image resize" />
+      </Helmet>
 
-        const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const newWidth = parseInt(e.target.value) || 0;
-          setWidth(newWidth);
-          if (maintainAspect && files[0]) {
-            const img = new Image();
-            img.src = URL.createObjectURL(files[0]);
-            img.onload = () => {
-              const ratio = img.height / img.width;
-              setHeight(Math.round(newWidth * ratio));
-            };
-          }
-          setOptions({ width: newWidth, height, maintainAspect });
-        };
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
 
-        return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="width">Width (px)</Label>
-                <Input
-                  id="width"
-                  type="number"
-                  value={width}
-                  onChange={handleWidthChange}
-                  min="1"
-                  max="4096"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="height">Height (px)</Label>
-                <Input
-                  id="height"
-                  type="number"
-                  value={height}
-                  onChange={(e) => {
-                    const newHeight = parseInt(e.target.value) || 0;
-                    setHeight(newHeight);
-                    setOptions({ width, height: newHeight, maintainAspect });
-                  }}
-                  min="1"
-                  max="4096"
-                  disabled={maintainAspect}
-                />
-              </div>
-            </div>
-            <div className="flex gap-4 justify-center">
-              <Button
-                variant={maintainAspect ? "default" : "outline"}
-                onClick={() => {
-                  setMaintainAspect(true);
-                  setOptions({ width, height, maintainAspect: true });
-                }}
-              >
-                Maintain Aspect Ratio
-              </Button>
-              <Button
-                variant={!maintainAspect ? "default" : "outline"}
-                onClick={() => {
-                  setMaintainAspect(false);
-                  setOptions({ width, height, maintainAspect: false });
-                }}
-              >
-                Custom Size
-              </Button>
-            </div>
+        <main className="flex-grow container mx-auto px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Resize Image
+            </h1>
+
+            <Card className="mb-8 backdrop-blur-sm bg-card/50 border-primary/20">
+              <CardContent className="p-8">
+                {!selectedFile ? (
+                  <div className="space-y-4">
+                    <div className="border-2 border-dashed border-primary/20 rounded-lg p-12 text-center hover:border-primary/40 transition-colors">
+                      <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-lg mb-4">Upload an image to start resizing</p>
+                      <input
+                        type="file"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) setSelectedFile(file);
+                        }}
+                        className="hidden"
+                        id="file-upload"
+                      />
+                      <Button asChild>
+                        <label htmlFor="file-upload" className="cursor-pointer">
+                          Choose Image
+                        </label>
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="width">Width (px)</Label>
+                        <Input
+                          id="width"
+                          type="number"
+                          value={width}
+                          onChange={(e) => handleWidthChange(parseInt(e.target.value) || 0)}
+                          min="1"
+                          max="4096"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="height">Height (px)</Label>
+                        <Input
+                          id="height"
+                          type="number"
+                          value={height}
+                          onChange={(e) => handleHeightChange(parseInt(e.target.value) || 0)}
+                          min="1"
+                          max="4096"
+                          disabled={maintainAspect}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 justify-center">
+                      <Button
+                        variant={maintainAspect ? "default" : "outline"}
+                        onClick={() => setMaintainAspect(true)}
+                      >
+                        Maintain Aspect Ratio
+                      </Button>
+                      <Button
+                        variant={!maintainAspect ? "default" : "outline"}
+                        onClick={() => setMaintainAspect(false)}
+                      >
+                        Custom Size
+                      </Button>
+                    </div>
+
+                    {previewUrl && (
+                      <div className="space-y-4">
+                        <Label>Preview ({width} × {height})</Label>
+                        <div className="border rounded-lg p-4 bg-muted/20 max-h-96 overflow-auto">
+                          <img src={previewUrl} alt="Preview" className="max-w-full mx-auto" />
+                        </div>
+                      </div>
+                    )}
+
+                    <canvas ref={canvasRef} className="hidden" />
+
+                    <div className="flex gap-3">
+                      <Button onClick={handleDownload} className="flex-1 gap-2">
+                        <Download className="h-4 w-4" />
+                        Download Resized Image
+                      </Button>
+                      <Button variant="outline" onClick={() => setSelectedFile(null)}>
+                        Upload New
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {relatedTools.length > 0 && (
+              <Card className="backdrop-blur-sm bg-card/50 border-primary/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <h3 className="text-lg font-semibold">Related Tools</h3>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {relatedTools.map((tool) => (
+                      <Link key={tool.path} to={tool.path}>
+                        <Button variant="outline" className="w-full gap-2 hover:bg-primary/10">
+                          <LinkIcon className="h-4 w-4" />
+                          {tool.name}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
-        );
-      }}
-      conversionHandler={async (files, options) => {
-        const file = files[0];
-        const img = document.createElement('img');
-        const url = URL.createObjectURL(file);
-        
-        await new Promise<void>((resolve) => {
-          img.onload = () => resolve();
-          img.src = url;
-        });
-        
-        const canvas = document.createElement('canvas');
-        const targetWidth = options?.width || 1920;
-        const targetHeight = options?.height || 1080;
-        
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-        const ctx = canvas.getContext('2d')!;
-        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-        
-        canvas.toBlob((blob) => {
-          downloadFile(blob!, "resized.jpg");
-        }, 'image/jpeg', 0.9);
-        
-        URL.revokeObjectURL(url);
-      }}
-      relatedTools={[
-        { name: "Compress Image", path: "/compress-image" },
-        { name: "JPG to PNG", path: "/jpg-to-png" },
-        { name: "PNG to JPG", path: "/png-to-jpg" },
-        { name: "Crop Image", path: "/crop-image" },
-      ]}
-    />
+        </main>
+
+        <Footer />
+      </div>
+    </>
   );
 }

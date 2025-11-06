@@ -939,20 +939,21 @@ export default function Conversions() {
                 </div>
               </TabsContent>
             ))}
-            {/* ✅ AdSense block */}
-            <div className="my-10 flex justify-center">
-              <ins
-                className="adsbygoogle"
-                style={{
-                  display: "inline-block",
-                  width: "600px",
-                  height: "50px",
-                }}
-                data-ad-client="ca-pub-6746133241342087"
-                data-ad-slot="4334657400"
-              ></ins>
-            </div>
           </Tabs>
+
+          {/* ✅ AdSense block */}
+          <div className="my-10 flex justify-center">
+            <ins
+              className="adsbygoogle"
+              style={{
+                display: "inline-block",
+                width: "600px",
+                height: "50px",
+              }}
+              data-ad-client="ca-pub-6746133241342087"
+              data-ad-slot="4334657400"
+            ></ins>
+          </div>
 
           {/* Privacy Notice */}
           <div className="max-w-4xl mx-auto mt-16">

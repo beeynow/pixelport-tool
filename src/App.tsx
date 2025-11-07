@@ -86,6 +86,42 @@ const PasswordGenerator = lazy(() => import("./pages/conversions/PasswordGenerat
 const TextConverter = lazy(() => import("./pages/conversions/TextConverter"));
 const WordCounter = lazy(() => import("./pages/conversions/WordCounter"));
 
+// New conversion pages
+const WebpConverter = lazy(() => import("./pages/conversions/WebpConverter"));
+const Grayscale = lazy(() => import("./pages/conversions/Grayscale"));
+const ImageToPdf = lazy(() => import("./pages/conversions/ImageToPdf"));
+const PptToPdf = lazy(() => import("./pages/conversions/PptToPdf"));
+const PdfToText = lazy(() => import("./pages/conversions/PdfToText"));
+const PdfOcr = lazy(() => import("./pages/conversions/PdfOcr"));
+const ReorderPdf = lazy(() => import("./pages/conversions/ReorderPdf"));
+const AudioToAac = lazy(() => import("./pages/conversions/AudioToAac"));
+const AudioToOgg = lazy(() => import("./pages/conversions/AudioToOgg"));
+const AudioToFlac = lazy(() => import("./pages/conversions/AudioToFlac"));
+const TrimAudio = lazy(() => import("./pages/conversions/TrimAudio"));
+const MergeAudio = lazy(() => import("./pages/conversions/MergeAudio"));
+const ExtractAudio = lazy(() => import("./pages/conversions/ExtractAudio"));
+const ChangeBitrate = lazy(() => import("./pages/conversions/ChangeBitrate"));
+const ChangeAudioSpeed = lazy(() => import("./pages/conversions/ChangeAudioSpeed"));
+const Ringtone = lazy(() => import("./pages/conversions/Ringtone"));
+const AddIntroOutro = lazy(() => import("./pages/conversions/AddIntroOutro"));
+const CutAudioSegments = lazy(() => import("./pages/conversions/CutAudioSegments"));
+const Mp4ToAvi = lazy(() => import("./pages/conversions/Mp4ToAvi"));
+const AviToMp4 = lazy(() => import("./pages/conversions/AviToMp4"));
+const MovToMp4 = lazy(() => import("./pages/conversions/MovToMp4"));
+const ExtractThumbnail = lazy(() => import("./pages/conversions/ExtractThumbnail"));
+const RemoveAudioVideo = lazy(() => import("./pages/conversions/RemoveAudioVideo"));
+const ChangeResolution = lazy(() => import("./pages/conversions/ChangeResolution"));
+const RotateVideo = lazy(() => import("./pages/conversions/RotateVideo"));
+const VideoWatermark = lazy(() => import("./pages/conversions/VideoWatermark"));
+const ImageToBase64 = lazy(() => import("./pages/conversions/ImageToBase64"));
+const QrGenerate = lazy(() => import("./pages/conversions/QrGenerate"));
+const ZipFiles = lazy(() => import("./pages/conversions/ZipFiles"));
+const Unzip = lazy(() => import("./pages/conversions/Unzip"));
+const CompressZip = lazy(() => import("./pages/conversions/CompressZip"));
+const BatchRename = lazy(() => import("./pages/conversions/BatchRename"));
+const FolderToZip = lazy(() => import("./pages/conversions/FolderToZip"));
+const UrlToPdf = lazy(() => import("./pages/conversions/UrlToPdf"));
+
 // Optimized loading fallback component
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -195,6 +231,43 @@ const App = () => (
             <Route path="/password-generator" element={<PasswordGenerator />} />
             <Route path="/text-converter" element={<TextConverter />} />
             <Route path="/word-counter" element={<WordCounter />} />
+            
+            {/* Additional Conversions */}
+            <Route path="/webp-converter" element={<WebpConverter />} />
+            <Route path="/grayscale" element={<Grayscale />} />
+            <Route path="/image-to-pdf" element={<ImageToPdf />} />
+            <Route path="/ppt-to-pdf" element={<PptToPdf />} />
+            <Route path="/pdf-to-ppt" element={<PdfToPowerpoint />} />
+            <Route path="/pdf-to-text" element={<PdfToText />} />
+            <Route path="/pdf-ocr" element={<PdfOcr />} />
+            <Route path="/reorder-pdf" element={<ReorderPdf />} />
+            <Route path="/audio-to-aac" element={<AudioToAac />} />
+            <Route path="/audio-to-ogg" element={<AudioToOgg />} />
+            <Route path="/audio-to-flac" element={<AudioToFlac />} />
+            <Route path="/trim-audio" element={<TrimAudio />} />
+            <Route path="/merge-audio" element={<MergeAudio />} />
+            <Route path="/extract-audio" element={<ExtractAudio />} />
+            <Route path="/change-bitrate" element={<ChangeBitrate />} />
+            <Route path="/audio-speed" element={<ChangeAudioSpeed />} />
+            <Route path="/ringtone" element={<Ringtone />} />
+            <Route path="/add-intro" element={<AddIntroOutro />} />
+            <Route path="/cut-segments" element={<CutAudioSegments />} />
+            <Route path="/mp4-to-avi" element={<Mp4ToAvi />} />
+            <Route path="/avi-to-mp4" element={<AviToMp4 />} />
+            <Route path="/mov-to-mp4" element={<MovToMp4 />} />
+            <Route path="/extract-thumbnail" element={<ExtractThumbnail />} />
+            <Route path="/remove-audio-video" element={<RemoveAudioVideo />} />
+            <Route path="/change-resolution" element={<ChangeResolution />} />
+            <Route path="/rotate-video" element={<RotateVideo />} />
+            <Route path="/video-watermark" element={<VideoWatermark />} />
+            <Route path="/image-to-base64" element={<ImageToBase64 />} />
+            <Route path="/qr-generate" element={<QrGenerate />} />
+            <Route path="/zip-files" element={<ZipFiles />} />
+            <Route path="/unzip" element={<Unzip />} />
+            <Route path="/compress-zip" element={<CompressZip />} />
+            <Route path="/batch-rename" element={<BatchRename />} />
+            <Route path="/folder-to-zip" element={<FolderToZip />} />
+            <Route path="/url-to-pdf" element={<UrlToPdf />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

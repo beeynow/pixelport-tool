@@ -16,14 +16,15 @@ export default function About() {
         />
         <meta name="keywords" content="about convertany, file converter platform, free conversion tools, online converter about" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <link rel="canonical" href="https://convertany.site/about" />
-        <meta property="og:title" content="About ConvertAny.site - Free Online File Converter" />
-        <meta property="og:description" content="Learn about ConvertAny.site - a free, easy-to-use online file conversion platform with 62+ tools." />
-        <meta property="og:url" content="https://convertany.site/about" />
+        <link rel="canonical" href="https://www.convertany.site/about" />
+        <meta property="og:site_name" content="Convertany" />
+        <meta property="og:title" content="About Convertany - Free Online File Converter" />
+        <meta property="og:description" content="Learn about Convertany - a free, easy-to-use online file conversion platform with 104+ tools." />
+        <meta property="og:url" content="https://www.convertany.site/about" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About ConvertAny.site" />
-        <meta name="twitter:description" content="Free online file conversion platform with 62+ tools for students, creators, and professionals." />
+        <meta name="twitter:title" content="About Convertany" />
+        <meta name="twitter:description" content="Free online file conversion platform with 104+ tools for students, creators, and professionals." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
@@ -32,12 +33,12 @@ export default function About() {
         <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              About ConvertAny.site
+              About Convertany
             </h1>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-6 mb-12">
               <p className="text-lg text-muted-foreground text-center mb-8">
-                ConvertAny.site is a free, easy-to-use online file conversion
+                Convertany is a free, easy-to-use online file conversion
                 platform built for students, creators, and professionals. Our
                 mission is to remove barriers to file conversion by offering
                 reliable, fast, and completely free tools — no sign-up, no
@@ -48,7 +49,7 @@ export default function About() {
                 <Card className="p-6">
                   <Shield className="w-12 h-12 text-primary mb-4" />
                   <h3 className="text-xl font-bold mb-2">
-                    62+ Conversion Tools
+                    104+ Conversion Tools
                   </h3>
                   <p className="text-muted-foreground">
                     Comprehensive suite of converters for documents, images,

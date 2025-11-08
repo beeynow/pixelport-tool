@@ -13,14 +13,15 @@ export default function Terms() {
         />
         <meta name="keywords" content="terms and conditions, convertany terms, service agreement, usage policy, legal terms" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <link rel="canonical" href="https://convertany.site/terms" />
-        <meta property="og:title" content="Terms & Conditions - ConvertAny.site" />
-        <meta property="og:description" content="Read our terms of service and usage policies for ConvertAny.site." />
-        <meta property="og:url" content="https://convertany.site/terms" />
+        <link rel="canonical" href="https://www.convertany.site/terms" />
+        <meta property="og:site_name" content="Convertany" />
+        <meta property="og:title" content="Terms & Conditions - Convertany" />
+        <meta property="og:description" content="Read our terms of service and usage policies for Convertany." />
+        <meta property="og:url" content="https://www.convertany.site/terms" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Terms & Conditions - ConvertAny.site" />
-        <meta name="twitter:description" content="Service usage agreement and legal terms for ConvertAny.site." />
+        <meta name="twitter:title" content="Terms & Conditions - Convertany" />
+        <meta name="twitter:description" content="Service usage agreement and legal terms for Convertany." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">

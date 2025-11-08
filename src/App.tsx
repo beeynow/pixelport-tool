@@ -122,6 +122,35 @@ const BatchRename = lazy(() => import("./pages/conversions/BatchRename"));
 const FolderToZip = lazy(() => import("./pages/conversions/FolderToZip"));
 const UrlToPdf = lazy(() => import("./pages/conversions/UrlToPdf"));
 
+// Additional conversion pages
+const M4aToMp3 = lazy(() => import("./pages/conversions/M4aToMp3"));
+const WebmToMp4 = lazy(() => import("./pages/conversions/WebmToMp4"));
+const MkvToMp4 = lazy(() => import("./pages/conversions/MkvToMp4"));
+const FlvToMp4 = lazy(() => import("./pages/conversions/FlvToMp4"));
+const WmvToMp4 = lazy(() => import("./pages/conversions/WmvToMp4"));
+const PsdToPng = lazy(() => import("./pages/conversions/PsdToPng"));
+const PsdToJpg = lazy(() => import("./pages/conversions/PsdToJpg"));
+const GifToPng = lazy(() => import("./pages/conversions/GifToPng"));
+const GifToJpg = lazy(() => import("./pages/conversions/GifToJpg"));
+const WebpToGif = lazy(() => import("./pages/conversions/WebpToGif"));
+const SvgToPdf = lazy(() => import("./pages/conversions/SvgToPdf"));
+const TiffToPdf = lazy(() => import("./pages/conversions/TiffToPdf"));
+const PdfToJpg = lazy(() => import("./pages/conversions/PdfToJpg"));
+const PdfToPng = lazy(() => import("./pages/conversions/PdfToPng"));
+const OggToMp3 = lazy(() => import("./pages/conversions/OggToMp3"));
+const FlacToMp3 = lazy(() => import("./pages/conversions/FlacToMp3"));
+const AacToMp3 = lazy(() => import("./pages/conversions/AacToMp3"));
+const M4aToWav = lazy(() => import("./pages/conversions/M4aToWav"));
+const OggToWav = lazy(() => import("./pages/conversions/OggToWav"));
+const ThreeGpToMp4 = lazy(() => import("./pages/conversions/ThreeGpToMp4"));
+const M4vToMp4 = lazy(() => import("./pages/conversions/M4vToMp4"));
+const Mp4ToWebm = lazy(() => import("./pages/conversions/Mp4ToWebm"));
+const Mp4ToMkv = lazy(() => import("./pages/conversions/Mp4ToMkv"));
+const DocxToTxt = lazy(() => import("./pages/conversions/DocxToTxt"));
+const TxtToDocx = lazy(() => import("./pages/conversions/TxtToDocx"));
+const JsonToPdf = lazy(() => import("./pages/conversions/JsonToPdf"));
+const CsvToPdf = lazy(() => import("./pages/conversions/CsvToPdf"));
+
 // Optimized loading fallback component
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -268,6 +297,35 @@ const App = () => (
             <Route path="/batch-rename" element={<BatchRename />} />
             <Route path="/folder-to-zip" element={<FolderToZip />} />
             <Route path="/url-to-pdf" element={<UrlToPdf />} />
+            
+            {/* Additional Conversion Routes */}
+            <Route path="/m4a-to-mp3" element={<M4aToMp3 />} />
+            <Route path="/webm-to-mp4" element={<WebmToMp4 />} />
+            <Route path="/mkv-to-mp4" element={<MkvToMp4 />} />
+            <Route path="/flv-to-mp4" element={<FlvToMp4 />} />
+            <Route path="/wmv-to-mp4" element={<WmvToMp4 />} />
+            <Route path="/psd-to-png" element={<PsdToPng />} />
+            <Route path="/psd-to-jpg" element={<PsdToJpg />} />
+            <Route path="/gif-to-png" element={<GifToPng />} />
+            <Route path="/gif-to-jpg" element={<GifToJpg />} />
+            <Route path="/webp-to-gif" element={<WebpToGif />} />
+            <Route path="/svg-to-pdf" element={<SvgToPdf />} />
+            <Route path="/tiff-to-pdf" element={<TiffToPdf />} />
+            <Route path="/pdf-to-jpg" element={<PdfToJpg />} />
+            <Route path="/pdf-to-png" element={<PdfToPng />} />
+            <Route path="/ogg-to-mp3" element={<OggToMp3 />} />
+            <Route path="/flac-to-mp3" element={<FlacToMp3 />} />
+            <Route path="/aac-to-mp3" element={<AacToMp3 />} />
+            <Route path="/m4a-to-wav" element={<M4aToWav />} />
+            <Route path="/ogg-to-wav" element={<OggToWav />} />
+            <Route path="/3gp-to-mp4" element={<ThreeGpToMp4 />} />
+            <Route path="/m4v-to-mp4" element={<M4vToMp4 />} />
+            <Route path="/mp4-to-webm" element={<Mp4ToWebm />} />
+            <Route path="/mp4-to-mkv" element={<Mp4ToMkv />} />
+            <Route path="/docx-to-txt" element={<DocxToTxt />} />
+            <Route path="/txt-to-docx" element={<TxtToDocx />} />
+            <Route path="/json-to-pdf" element={<JsonToPdf />} />
+            <Route path="/csv-to-pdf" element={<CsvToPdf />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>

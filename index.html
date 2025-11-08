@@ -3,8 +3,12 @@
   <head>
     <!-- Viewport & Encoding (critical first) -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Performance hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
     <!-- Preload critical resources -->
     <link rel="preload" href="/src/main.tsx" as="script" crossorigin />
@@ -15,7 +19,7 @@
     <meta name="description" content="ConvertAny.site is a 100% free online file converter for students and creators. Instantly convert PDF, Word, JPG, MP4, and 60+ formats — fast, secure, and no sign-up required." />
     <meta name="keywords" content="free file converter, online converter, convert pdf to word, convert jpg to png, convert video to mp4, file conversion website, convertany.site, free convert tool, pdf compressor, online tools for students, convert files online fast" />
     <meta name="author" content="ConvertAny.site" />
-    <link rel="canonical" href="https://convertany.site/" />
+    <link rel="canonical" href="https://www.convertany.site/" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -27,9 +31,10 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="Convertany" />
     <meta
       property="og:title"
-      content="ConvertAny.site – Free Online File Converter"
+      content="Convertany – Free Online File Converter"
     />
     <meta
       property="og:description"
@@ -37,16 +42,18 @@
     />
     <meta
       property="og:image"
-      content="https://convertany.site/assets/og-image.jpg"
+      content="https://www.convertany.site/assets/og-image.jpg"
     />
-    <meta property="og:url" content="https://convertany.site/" />
+    <meta property="og:url" content="https://www.convertany.site/" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@convertany" />
     <meta
       name="twitter:title"
-      content="ConvertAny.site – Free Online File Converter"
+      content="Convertany – Free Online File Converter"
     />
     <meta
       name="twitter:description"
@@ -54,7 +61,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://convertany.site/assets/og-image.jpg"
+      content="https://www.convertany.site/assets/og-image.jpg"
     />
 
     <meta name="google-adsense-account" content="ca-pub-6746133241342087" />
@@ -86,11 +93,11 @@
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Convertany.site",
-        "url": "https://convertany.site/",
+        "name": "Convertany",
+        "url": "https://www.convertany.site/",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://convertany.site/search?q={search_term_string}",
+          "target": "https://www.convertany.site/search?q={search_term_string}",
           "query-input": "required name=search_term_string"
         },
         "description": "Free online file converter for students and creators. Convert PDF, Word, images, videos, and more — 100% free and secure."

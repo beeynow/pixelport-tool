@@ -14,13 +14,14 @@ export default function Privacy() {
         />
         <meta name="keywords" content="privacy policy, convertany privacy, data protection, GDPR, CCPA, user privacy" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <link rel="canonical" href="https://convertany.site/privacy" />
-        <meta property="og:title" content="Privacy Policy - ConvertAny.site" />
+        <link rel="canonical" href="https://www.convertany.site/privacy" />
+        <meta property="og:site_name" content="Convertany" />
+        <meta property="og:title" content="Privacy Policy - Convertany" />
         <meta property="og:description" content="Comprehensive privacy policy covering data collection, usage, and your privacy rights." />
-        <meta property="og:url" content="https://convertany.site/privacy" />
+        <meta property="og:url" content="https://www.convertany.site/privacy" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Privacy Policy - ConvertAny.site" />
+        <meta name="twitter:title" content="Privacy Policy - Convertany" />
         <meta name="twitter:description" content="Learn how we protect your data and respect your privacy." />
       </Helmet>
 
